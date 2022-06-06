@@ -7,7 +7,7 @@
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
 		"prepare": "svelte-kit sync",
-		"start": "node -r dotenv/config build/index.js"
+		"start": "node build/index.js"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "next",
