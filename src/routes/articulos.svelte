@@ -1,7 +1,9 @@
 <script context="module">
-    export const load = async ({ fetch }) => {
-        const response = await fetch(`${import.meta.env.VITE_MUEVETE_API_URI}/api/articulos`);
-        
+import ArticuloCard from "$lib/ArticuloCard.svelte";
+
+export const load = async ({ fetch }) => {
+    const response = await fetch("/api/articulos");
+    
     if (response.ok) {
         const data = await response.json();
         return {
@@ -21,8 +23,6 @@
 </script>
 
 <script>
-import ArticuloCard from "$lib/ArticuloCard.svelte";
-
 export let data;
 </script>
 
