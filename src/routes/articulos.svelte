@@ -1,8 +1,8 @@
 <script context="module">
 import ArticuloCard from "$lib/ArticuloCard.svelte";
 
-export const load = async ({ fetch }) => {
-    const response = await fetch("/api/articulos");
+export const load = async ({ fetch, session }) => {
+    const response = await fetch(`${session.apiURI}/api/articulos`);
     
     if (response.ok) {
         const data = await response.json();

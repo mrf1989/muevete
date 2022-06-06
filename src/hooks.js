@@ -1,7 +1,5 @@
 import "dotenv/config";
 
-export const handle = async ({ event, resolve }) => {
-    console.log(process.env);
-
-    return await resolve(event);
+export const getSession = (event) => {
+    return { apiURI: process.env.VITE_MUEVETE_API_URI };
 }
