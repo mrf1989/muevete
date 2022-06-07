@@ -14,9 +14,7 @@ export const load = async ({ fetch, session }) => {
     } else {
         return {
             status: 404,
-            body: {
-                message: "Not Found"
-            }
+            error: new Error("No existen artículos o es imposible acceder a ellos")
         }
     }
 }
