@@ -9,6 +9,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/articulos">Artículos</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/usuarios/registro">Registrarse</a>
+            </li>
         </ul>
     </div>
 </nav>
