@@ -5,8 +5,8 @@ import Footer from "$lib/Footer.svelte";
 
 <div class="container">
     <Navbar />
-    <div class="row">
+    <main class="row">
         <slot></slot>
-    </div>
+    </main>
     <Footer />
 </div>
