@@ -12,6 +12,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="/usuarios/registro">Registrarse</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/usuarios/login">Login</a>
+            </li>
         </ul>
     </div>
 </nav>
