@@ -1,6 +1,7 @@
+import { getHeaders } from "$lib/utils";
+
 export const post = async ({ request, locals }) => {
-    const headers = new Headers(request.headers);
-    headers.set("Content-Type", "application/json");
+    const headers = getHeaders(request);
     const body = await request.json();
     const apiURI = locals.apiURI;
 
@@ -13,6 +14,7 @@ export const post = async ({ request, locals }) => {
     if (response.ok) {
         return {
             status: 201,
+            headers: response.headers,
             body: await response.json()
         }
     } else {
