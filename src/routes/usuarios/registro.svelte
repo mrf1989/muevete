@@ -27,7 +27,7 @@ const handleDatosUsuario = async (event) => {
     });
 
     if (response.ok) {
-        goto("/usuarios/login")
+        goto("/usuarios/login");
     } else {
         error = await response.json();
     }

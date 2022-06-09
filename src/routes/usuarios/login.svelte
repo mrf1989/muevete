@@ -16,7 +16,7 @@ const handleLogin = async () => {
     });
 
     if (response.ok) {
-        goto("/")
+        goto("/");
     } else {
         error = await response.json()
     }
