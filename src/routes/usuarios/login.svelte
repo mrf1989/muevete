@@ -1,3 +1,16 @@
+<script context="module">
+export const load = async ({ session }) => {
+    if (session.user) {
+        return {
+            status: 302,
+            redirect: "/"
+        };
+    }
+
+    return {};
+}
+</script>
+
 <script>
 import { goto } from "$app/navigation";
 import { session } from "$app/stores";
@@ -17,7 +30,7 @@ const handleLogin = async () => {
     });
 
     if (response.ok) {
-        $session.user = await response.json();
+        $session.user = await response.json()
         goto("/");
     } else {
         error = await response.json()

@@ -1,5 +1,4 @@
-import { getHeaders } from "$lib/utils";
-import * as cookie from "cookie";
+import { getHeaders, getUserInformation } from "$lib/utils";
 
 export const post = async ({ request, locals }) => {
     const headers = getHeaders(request);
@@ -12,18 +11,19 @@ export const post = async ({ request, locals }) => {
         body: JSON.stringify(body)
     });
 
-    if (response.ok && response.headers.get("set-cookie")) {
-        const cookies = cookie.parse(response.headers.get("set-cookie")).MDAUTHID;
-        const id = cookies.split("-")[0];
-        const res = await fetch(`${apiURI}/api/usuarios/${id}`);
-        const user = await res.json();
+    if (response.ok) {
+        const user = await getUserInformation(
+            response.headers.get("set-cookie"),
+            apiURI
+        );
+
         response.headers.delete("content-length");
 
         return {
             status: 200,
             headers: response.headers,
             body: JSON.stringify({
-                id,
+                id: user._id,
                 username: user.username,
                 rol: user.rol
             })

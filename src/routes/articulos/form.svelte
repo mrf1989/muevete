@@ -1,8 +1,25 @@
+<script context="module">
+export const load = async ({ session }) => {
+    const redirectToLogin = {
+        status: 302,
+        redirect: "/usuarios/login"
+    };
+
+    if (!session.user) {
+        return redirectToLogin;
+    } else if (session.user.rol != "admin") {
+        return redirectToLogin;
+    }
+
+    return {};
+}
+</script>
+
 <script>
 import { goto } from "$app/navigation";
 import { session } from "$app/stores";
-import ArticuloForm from "$lib/ArticuloForm.svelte";
 import { getDate } from "$lib/utils";
+import ArticuloForm from "$lib/ArticuloForm.svelte";
 
 let error;
 
