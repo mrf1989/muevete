@@ -22,15 +22,28 @@ export const load = async ({ fetch, session }) => {
 
 <script>
 export let data;
+
+function dividir (data, n) {
+    const principalArray = data;
+    let res = [];
+    while (data.length > 0) {
+        const row = principalArray.splice(0, n);
+        res.push(row);
+    }
+
+    return res;
+}
 </script>
 
-<div class="col-12">
+<div>
     <h1 class="text-center">Artículos</h1>
     <div class="container">
+        {#each dividir(data, 3) as rows }
         <div class="row">
-        {#each data as articulo}
-            <ArticuloCard articulo={articulo}/>
+            {#each rows as articulo}
+            <ArticuloCard articulo={articulo}/> 
+            {/each}
+        </div>
         {/each}
-        </div>        
-    </div>
+    </div>        
 </div>
