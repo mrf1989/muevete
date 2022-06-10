@@ -7,3 +7,7 @@ export const getHeaders = (request) => {
         cookie: request.headers.get("cookie")
     });
 }
+
+export const getDate = (date) => {
+    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+}
