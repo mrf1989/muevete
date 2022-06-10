@@ -1,5 +1,19 @@
+<script context="module">
+export const load = async ({ session }) => {
+    if (session.user) {
+        return {
+            status: 302,
+            redirect: "/"
+        };
+    }
+
+    return {};
+}
+</script>
+
 <script>
 import { goto } from "$app/navigation";
+import { session } from "$app/stores";
 
 let username, password, error;
 
@@ -16,6 +30,7 @@ const handleLogin = async () => {
     });
 
     if (response.ok) {
+        $session.user = await response.json()
         goto("/");
     } else {
         error = await response.json()
@@ -36,6 +51,7 @@ const handleLogin = async () => {
         </div>
         <button on:click|preventDefault={handleLogin} type="submit" class="btn btn-primary btn-block">Acceder</button>
     </form>
+    <p class="text-center">¿Quieres registrarte? <a href="/usuarios/registro">Házlo aquí</a></p>
     {#if error}
     <div class="alert alert-warning" role="alert">
         {error.message}
