@@ -23,7 +23,7 @@ const logout = () => {
                 <a class="nav-link" href="/articulos">Artículos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Eventos</a>
+                <a class="nav-link" href="/eventos">Eventos</a>
             </li>
             {#if !$session.user}
             <li class="nav-item">
