@@ -1,6 +1,4 @@
 <script context="module">
-import ArticuloCard from "$lib/ArticuloCard.svelte";
-
 export const load = async ({ fetch, session }) => {
     const response = await fetch(`${session.apiURI}/api/articulos`);
     
@@ -21,29 +19,24 @@ export const load = async ({ fetch, session }) => {
 </script>
 
 <script>
+import ArticuloCard from "$lib/ArticuloCard.svelte";
+import { session } from "$app/stores";
+
 export let data;
-
-function dividir (data, n) {
-    const principalArray = data;
-    let res = [];
-    while (data.length > 0) {
-        const row = principalArray.splice(0, n);
-        res.push(row);
-    }
-
-    return res;
-}
 </script>
 
 <div>
     <h1 class="text-center">Artículos</h1>
     <div class="container">
-        {#each dividir(data, 3) as rows }
-        <div class="row">
-            {#each rows as articulo}
-            <ArticuloCard articulo={articulo}/> 
-            {/each}
+        {#if $session.user.rol == "admin"}
+        <div class="d-flex flex-row-reverse mb-2">
+            <a class="btn btn-primary" href="/articulos/form">Nuevo artículo</a>
         </div>
+        {/if}
+        <div class="row">
+        {#each data as articulo }
+            <ArticuloCard articulo={articulo}/>
         {/each}
+        </div>
     </div>        
 </div>
