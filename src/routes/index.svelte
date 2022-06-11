@@ -2,7 +2,7 @@
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
             <h1 class="display-4">Muévete por los que no pueden</h1>
-            <p class="lead">Una iniciativa solidaria que nace con el objetivo de dar a conocer las enfermedades raras o minoritarias</p>
+            <p class="lead">Una iniciativa solidaria con el objetivo de dar a conocer las enfermedades raras o minoritarias</p>
         </div>
     </div>
 </div>
@@ -13,7 +13,7 @@
             <p>Muévete por los que no pueden es una iniciativa solidaria, conducida 100% por voluntarios, que nace con el objetivo de dar a conocer las enfermedades raras o minoritarias para que, desde el conocimiento, la población pueda entender, apoyar y ayudar a los afectados de estas patologías.</p>
         </div>
     </div>
-    <div class="row">
+    <div class="row mt-3 my-3">
         <div class="col-12">
             <img class="img-fluid" src="/logotipo.jpeg" alt="Logotipo de Muévete por los que no pueden">
         </div>

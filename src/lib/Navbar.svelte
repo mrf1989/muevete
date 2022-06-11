@@ -8,7 +8,7 @@ const logout = () => {
 }
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
     <a class="navbar-brand" href="/">Muévete APP</a>
     {#if $session.user}
     <span>¡Hola, {$session.user.username}!</span>

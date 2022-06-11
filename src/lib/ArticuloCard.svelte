@@ -1,4 +1,6 @@
 <script>
+import { session } from "$app/stores";
+
 export let articulo;
 
 const procesarSubtitulo = (str) => {
@@ -13,11 +15,20 @@ const procesarSubtitulo = (str) => {
 </script>
 
 <div class="col-lg-4">
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-body">
             <h5 class="card-title">{articulo.titulo}</h5>
             <p class="card-text">{procesarSubtitulo(articulo.subtitulo)}</p>
-            <a href={`/articulos/${articulo._id}`} class="btn btn-primary">Leer</a>
+            <div class="row">
+                <div class="col">
+                    <a href={`/articulos/${articulo._id}`} class="btn btn-primary">Leer</a>
+                </div>
+                {#if $session.user.rol == "admin"}
+                <div class="col text-right">
+                    <a href={`/articulos/form/${articulo._id}`}>Editar</a>
+                </div>
+                {/if}
+            </div>
         </div>
     </div>
 </div>

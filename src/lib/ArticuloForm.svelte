@@ -1,7 +1,18 @@
 <script>
 import { createEventDispatcher } from "svelte";
 
+export let articulo;
+
 let titulo, subtitulo, cuerpo, categoria, referencia, enlaceImagen;
+
+if (articulo) {
+    titulo = articulo.titulo;
+    subtitulo = articulo.subtitulo;
+    cuerpo = articulo.cuerpo;
+    categoria = articulo.categoria;
+    referencia = articulo.referencia;
+    enlaceImagen = articulo.enlaceImagen;
+}
 
 const dispatch = createEventDispatcher();
 
@@ -43,5 +54,11 @@ const getDatosArticulo = () => {
         <label for="enlaceImagen">Enlace de imagen</label>
         <input bind:value={enlaceImagen} type="url" class="form-control" id="enlaceImagen">
     </div>
-    <button on:click|preventDefault={getDatosArticulo} class="btn btn-primary btn-block">Publicar artículo</button>
+    <button on:click|preventDefault={getDatosArticulo} class="btn btn-primary btn-block">
+    {#if !articulo}
+        Publicar
+    {:else}
+        Actualizar
+    {/if} artículo
+    </button>
 </form>
