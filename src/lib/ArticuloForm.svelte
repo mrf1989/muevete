@@ -26,20 +26,20 @@ const getDatosArticulo = () => {
 <form>
     <div class="form-group">
         <label for="titulo">Título</label>
-        <input bind:value={titulo} type="text" class="form-control" id="titulo">
+        <input bind:value={titulo} type="text" class="form-control" id="titulo" required>
     </div>
     <div class="form-group">
         <label for="subtitulo">Subtítulo</label>
-        <input bind:value={subtitulo} type="text" class="form-control" id="subtitulo">
+        <input bind:value={subtitulo} type="text" class="form-control" id="subtitulo" required>
     </div>
     <div class="form-group">
         <label for="cuerpo">Cuerpo del artículo</label>
-        <textarea bind:value={cuerpo} rows="5" class="form-control" id="cuerpo"></textarea>
+        <textarea bind:value={cuerpo} rows="5" class="form-control" id="cuerpo" required></textarea>
     </div>
     <div class="form-row">
         <div class="form-group col-lg-6">
             <label for="categoria">Categoría</label>
-            <select bind:value={categoria} class="form-control" for="categoria" id="categoria">
+            <select bind:value={categoria} class="form-control" for="categoria" id="categoria" required>
                 <option value="noticias">Noticias</option>
                 <option value="comunicados">Comunicados</option>
                 <option value="divulgacion">Divulgación</option>

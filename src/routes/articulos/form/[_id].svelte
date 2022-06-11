@@ -76,4 +76,9 @@ const handleDatosArticulo = async (event) => {
     {#if articulo && $session.user.rol == "admin"}
     <ArticuloForm on:post={handleDatosArticulo} articulo={articulo} />
     {/if}
+    {#if error}
+    <div class="alert alert-warning" role="alert">
+        {error.message}
+    </div>
+    {/if}
 </div>
