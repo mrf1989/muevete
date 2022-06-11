@@ -40,7 +40,7 @@ const handleLogin = async () => {
 
 <div class="col-md-6 offset-md-3">
     <h1 class="text-center">Login</h1>
-    <form>
+    <form class="mb-4">
         <div class="form-group">
             <label for="username">Nombre de usuario</label>
             <input bind:value={username} type="text" class="form-control" id="username">
