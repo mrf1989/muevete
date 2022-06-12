@@ -1,5 +1,6 @@
 <script>
 import { createEventDispatcher } from "svelte";
+import { getDate } from "$lib/utils";
 
 export let evento;
 
@@ -9,8 +10,8 @@ if (evento) {
     nombre = evento.nombre;
     descripcion = evento.descripcion;
     objetivoKm = evento.objetivoKm;
-    fechaInicio = evento.fechaInicio;
-    fechaFin = evento.fechaFin;
+    fechaInicio = getDate(new Date(evento.fechaInicio));
+    fechaFin = getDate(new Date(evento.fechaFin));
     modalidad = evento.modalidad;
 }
 
@@ -39,7 +40,7 @@ const getDatosEvento = () => {
         </div>
         <div class="form-group col-lg-6">
             <label for="modalidad">Modalidad deportiva</label>
-            <select multiple class="form-control" id="modalidad">
+            <select bind:value={modalidad} multiple class="form-control" id="modalidad">
                 <option value="caminata">Caminata</option>
                 <option value="carrera">Carrera</option>
                 <option value="bicicleta">Bicicleta</option>

@@ -11,7 +11,9 @@ export const getHeaders = (request) => {
 }
 
 export const getDate = (date) => {
-    return `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+    const mes = (date.getMonth() + 1).toString().padStart(2, 0);
+    const dia = date.getDate().toString().padStart(2, 0);
+    return `${date.getFullYear()}-${mes}-${dia}`;
 }
 
 export const getUserInformation = async (data, uri) => {
