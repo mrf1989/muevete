@@ -3,6 +3,7 @@ import { session } from "$app/stores";
 import { getDate } from "$lib/utils";
 
 export let evento;
+export let dorsal;
 
 const literalModalidad = evento.modalidad.length > 1 ?
     "Modalidades deportivas permitidas" :
@@ -19,6 +20,13 @@ const literalModalidad = evento.modalidad.length > 1 ?
             <a href="/eventos/form/{evento._id}">Editar evento</a>
             {/if}
         </small>
+        <div class="d-flex flex-row-reverse">
+            {#if !dorsal}
+            <a href="#" class="btn btn-primary">Obtener dorsal</a>
+            {:else}
+            <p><strong>Número de dorsal {dorsal.num.toString().padStart(4, 0)}</strong></p>
+            {/if}
+        </div>
     </header>
     <main class="row">
         <div class="col-12 text-center">
