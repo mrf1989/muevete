@@ -4,7 +4,7 @@ import { getDate } from "$lib/utils";
 
 export let evento;
 
-let nombre, descripcion, objetivoKm, fechaInicio, fechaFin, modalidad;
+let nombre, descripcion, objetivoKm, fechaInicio, fechaFin, modalidad = [];
 
 if (evento) {
     nombre = evento.nombre;
