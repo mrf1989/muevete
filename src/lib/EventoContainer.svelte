@@ -1,5 +1,6 @@
 <script>
 import DorsalForm from "$lib/DorsalForm.svelte";
+import EsfuerzoForm from "$lib/EsfuerzoForm.svelte";
 import { session } from "$app/stores";
 import { getDate } from "$lib/utils";
 import { goto } from "$app/navigation";
@@ -36,6 +37,32 @@ const handleDatosDorsal = async (event) => {
         error = await response.json();
     }
 }
+
+const handleDatosEsfuerzo = async (event) => {
+    const data = event.detail;
+
+    const nuevoEsfuerzo = {
+        comentario: data.comentario,
+        numKm: data.numKm,
+        modalidad: data.modalidad,
+        dorsal_id: data.dorsal_id,
+        usuario_id: $session.user.id
+    }
+
+    const response = await fetch("/api/esfuerzos/crear", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(nuevoEsfuerzo)
+    });
+
+    if (response.ok) {
+        goto("/eventos");
+    } else {
+        error = await response.json();
+    }
+}
 </script>
 
 <article>
@@ -56,7 +83,9 @@ const handleDatosDorsal = async (event) => {
                     <span class="text-danger">{error.message}</span>
                     {/if}
                 {:else}
-                <p><strong>Número de dorsal {dorsal.num.toString().padStart(4, 0)}</strong></p>
+                <button class="btn btn-primary" data-toggle="modal" data-target="#esfuerzoForm">
+                    Añadir kilómetros con dorsal {dorsal.num.toString().padStart(4, 0)}
+                </button>
                 {/if}
             {:else}
             <a href="/usuarios/login" class="btn btn-primary">Obtener dorsal</a>
@@ -85,3 +114,6 @@ const handleDatosDorsal = async (event) => {
 </article>
 
 <DorsalForm on:post={handleDatosDorsal} />
+{#if dorsal}
+<EsfuerzoForm on:post={handleDatosEsfuerzo} {dorsal} />
+{/if}
