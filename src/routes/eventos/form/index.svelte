@@ -16,9 +16,7 @@ export const load = async ({ session }) => {
 </script>
 
 <script>
-import { goto } from "$app/navigation";
-import { session } from "$app/stores";
-import { getDate } from "$lib/utils";
+import { goto } from "$app/navigation";;
 import EventoForm from "$lib/EventoForm.svelte";
 
 let error;

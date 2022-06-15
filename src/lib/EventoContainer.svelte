@@ -1,13 +1,41 @@
 <script>
+import DorsalForm from "$lib/DorsalForm.svelte";
 import { session } from "$app/stores";
 import { getDate } from "$lib/utils";
 
 export let evento;
 export let dorsal;
 
+let error;
+
 const literalModalidad = evento.modalidad.length > 1 ?
     "Modalidades deportivas permitidas" :
     "Modalidad deportiva permitida";
+
+const handleDatosDorsal = async (event) => {
+    const data = event.detail;
+
+    const nuevoDorsal = {
+        lema: data.lema,
+        usuario_id: $session.user.id,
+        evento_id: evento._id
+    }
+
+    const response = await fetch("/api/dorsal/crear", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(nuevoDorsal)
+    });
+
+    if (response.ok) {
+        const dorsalId = await response.json();
+        console.log(dorsalId);
+    } else {
+        error = await response.json();
+    }
+}
 </script>
 
 <article>
@@ -21,8 +49,11 @@ const literalModalidad = evento.modalidad.length > 1 ?
             {/if}
         </small>
         <div class="d-flex flex-row-reverse">
-            {#if !dorsal}
-            <a href="#" class="btn btn-primary">Obtener dorsal</a>
+            {#if !dorsal && $session.user}
+            <button class="btn btn-primary" data-toggle="modal" data-target="#dorsalForm">Obtener dorsal</button>
+                {#if error}
+                <span class="text-danger">{error.message}</span>
+                {/if}
             {:else}
             <p><strong>Número de dorsal {dorsal.num.toString().padStart(4, 0)}</strong></p>
             {/if}
@@ -48,3 +79,5 @@ const literalModalidad = evento.modalidad.length > 1 ?
         </div>
     </main>
 </article>
+
+<DorsalForm on:post={handleDatosDorsal} />
