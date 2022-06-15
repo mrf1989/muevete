@@ -8,6 +8,7 @@ export let dorsal;
 const literalModalidad = evento.modalidad.length > 1 ?
     "Modalidades deportivas permitidas" :
     "Modalidad deportiva permitida";
+const enlaceObtenerDorsal = $session.user ? "#" : "/usuarios/login";
 </script>
 
 <article>
@@ -22,7 +23,7 @@ const literalModalidad = evento.modalidad.length > 1 ?
         </small>
         <div class="d-flex flex-row-reverse">
             {#if !dorsal}
-            <a href="#" class="btn btn-primary">Obtener dorsal</a>
+            <a href={enlaceObtenerDorsal} class="btn btn-primary">Obtener dorsal</a>
             {:else}
             <p><strong>Número de dorsal {dorsal.num.toString().padStart(4, 0)}</strong></p>
             {/if}
