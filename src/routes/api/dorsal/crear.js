@@ -12,6 +12,8 @@ export const post = async ({ request, locals }) => {
     });
 
     if (response.ok) {
+        response.headers.delete("content-length");
+
         return {
             status: 201,
             headers: response.headers,

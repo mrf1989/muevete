@@ -2,6 +2,7 @@
 import DorsalForm from "$lib/DorsalForm.svelte";
 import { session } from "$app/stores";
 import { getDate } from "$lib/utils";
+import { goto } from "$app/navigation";
 
 export let evento;
 export let dorsal;
@@ -30,8 +31,7 @@ const handleDatosDorsal = async (event) => {
     });
 
     if (response.ok) {
-        const dorsalId = await response.json();
-        console.log(dorsalId);
+        goto("/eventos");
     } else {
         error = await response.json();
     }
@@ -49,13 +49,17 @@ const handleDatosDorsal = async (event) => {
             {/if}
         </small>
         <div class="d-flex flex-row-reverse">
-            {#if !dorsal && $session.user}
-            <button class="btn btn-primary" data-toggle="modal" data-target="#dorsalForm">Obtener dorsal</button>
-                {#if error}
-                <span class="text-danger">{error.message}</span>
+            {#if $session.user}
+                {#if !dorsal}
+                <button class="btn btn-primary" data-toggle="modal" data-target="#dorsalForm">Obtener dorsal</button>
+                    {#if error}
+                    <span class="text-danger">{error.message}</span>
+                    {/if}
+                {:else}
+                <p><strong>Número de dorsal {dorsal.num.toString().padStart(4, 0)}</strong></p>
                 {/if}
             {:else}
-            <p><strong>Número de dorsal {dorsal.num.toString().padStart(4, 0)}</strong></p>
+            <a href="/usuarios/login" class="btn btn-primary">Obtener dorsal</a>
             {/if}
         </div>
     </header>
