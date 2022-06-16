@@ -31,11 +31,14 @@ const logout = () => {
             </li>
             {:else if $session.user.rol == "admin"}
             <li class="nav-item">
+                <a class="nav-link" href="/perfil">Mi perfil</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">Administración</a>
             </li>
             {:else}
             <li class="nav-item">
-                <a class="nav-link" href="#">Mi perfil</a>
+                <a class="nav-link" href="/perfil">Mi perfil</a>
             </li>
             {/if}
             {#if $session.user}
