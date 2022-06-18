@@ -23,9 +23,9 @@ export const post = async ({ request, locals }) => {
             status: 200,
             headers: response.headers,
             body: JSON.stringify({
-                id: user._id,
-                username: user.username,
-                rol: user.rol
+                id: user.usuario._id,
+                username: user.usuario.username,
+                rol: user.usuario.rol
             })
         }
     } else {

@@ -30,10 +30,10 @@ const handleLogin = async () => {
     });
 
     if (response.ok) {
-        $session.user = await response.json()
+        $session.user = await response.json();
         goto("/");
     } else {
-        error = await response.json()
+        error = await response.json();
     }
 }
 </script>

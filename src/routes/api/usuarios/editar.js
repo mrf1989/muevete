@@ -1,24 +1,27 @@
 import { getHeaders } from "$lib/utils";
 
-export const get = async ({ request, locals }) => {
+export const put = async ({ request, locals }) => {
     const headers = getHeaders(request);
+    const body = await request.json();
     const apiURI = locals.apiURI;
 
-    const response = await fetch(`${apiURI}/api/dorsales/usuario/${locals.user.usuario._id}`, {
+    const response = await fetch(`${apiURI}/api/usuarios/${locals.user.usuario._id}`, {
+        method: "PUT",
         headers,
+        body: JSON.stringify(body)
     });
-    
+
     if (response.ok) {
         return {
-            status: 200,
+            status: 201,
             headers: response.headers,
             body: await response.json()
         }
     } else {
         return {
-            status: 404,
+            status: 500,
             body: JSON.stringify({
-                message: "No se han encontrado dorsales para este usuario."
+                message: "No se han podido modificar los datos del usuario."
             })
         }
     }

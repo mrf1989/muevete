@@ -1,10 +1,12 @@
 <script>
 import { session } from "$app/stores";
+import { goto } from "$app/navigation";
 
 const logout = () => {
     document.cookie = "MDAUTHID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "MDAUTHID.sig=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     $session.user = false;
+    goto("/usuarios/login");
 }
 </script>
 
@@ -31,11 +33,14 @@ const logout = () => {
             </li>
             {:else if $session.user.rol == "admin"}
             <li class="nav-item">
+                <a class="nav-link" href="/perfil">Mi perfil</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="#">Administración</a>
             </li>
             {:else}
             <li class="nav-item">
-                <a class="nav-link" href="#">Mi perfil</a>
+                <a class="nav-link" href="/perfil">Mi perfil</a>
             </li>
             {/if}
             {#if $session.user}
