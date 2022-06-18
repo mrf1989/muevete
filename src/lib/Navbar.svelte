@@ -36,7 +36,7 @@ const logout = () => {
                 <a class="nav-link" href="/perfil">Mi perfil</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Administración</a>
+                <a class="nav-link" href="/admin">Administración</a>
             </li>
             {:else}
             <li class="nav-item">
