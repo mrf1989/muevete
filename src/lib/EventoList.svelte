@@ -1,4 +1,5 @@
 <script>
+import { session } from "$app/stores";
 export let evento;
 
 const borrarEvento = async () => {
@@ -30,8 +31,10 @@ const borrarEvento = async () => {
                 </div>
                 <div class="btn-group" role="group">
                     <a href={`/eventos/${evento._id}`} class="btn btn-primary">Ir a evento</a>
+                    {#if $session.user.rol == "admin"}
                     <a href={`/eventos/form/${evento._id}`} class="btn btn-secondary">Editar</a>
                     <button data-toggle="modal" data-target="#borrarModal" class="btn btn-secondary">Eliminar</button>
+                    {/if}
                 </div>
             </div>
         </div>
