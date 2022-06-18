@@ -35,8 +35,13 @@ const logout = () => {
             <li class="nav-item">
                 <a class="nav-link" href="/perfil">Mi perfil</a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Administración</a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="/admin" id="adminMenuDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administración</a>
+                <div class="dropdown-menu" aria-labelledby="adminMenuDropdown">
+                    <a href="/admin/eventos" class="dropdown-item">Eventos</a>
+                    <a href="/admin/articulos" class="dropdown-item">Artículos</a>
+                    <a href="/admin/usuarios" class="dropdown-item">Usuarios</a>
+                </div>
             </li>
             {:else}
             <li class="nav-item">

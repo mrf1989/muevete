@@ -26,7 +26,6 @@ export const load = async ({ fetch, session }) => {
 </script>
 
 <script>
-import { session } from "$app/stores";
 import UsuarioCard from "$lib/UsuarioCard.svelte";
 import EventoList from "$lib/EventoList.svelte";
 
