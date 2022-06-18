@@ -26,3 +26,9 @@ export const getUserInformation = async (data, uri) => {
 
     return false;
 }
+
+export const getKmCompletados = (esfuerzos) => {
+    return esfuerzos
+        .map(esfuerzo => esfuerzo.numKm)
+        .reduce((a, b) => a + b);
+}

@@ -1,12 +1,16 @@
 <script>
 import DorsalForm from "$lib/DorsalForm.svelte";
 import EsfuerzoForm from "$lib/EsfuerzoForm.svelte";
+import EventoProgressBar from "$lib/EventoProgressBar.svelte";
 import { session } from "$app/stores";
-import { getDate } from "$lib/utils";
+import { getDate, getKmCompletados } from "$lib/utils";
 import { goto } from "$app/navigation";
 
 export let evento;
 export let dorsal;
+export let esfuerzos;
+
+$: kmCompletados = getKmCompletados(esfuerzos);
 
 let error;
 
@@ -46,7 +50,8 @@ const handleDatosEsfuerzo = async (event) => {
         numKm: data.numKm,
         modalidad: data.modalidad,
         dorsal_id: data.dorsal_id,
-        usuario_id: $session.user.id
+        usuario_id: $session.user.id,
+        evento_id: evento._id
     }
 
     const response = await fetch("/api/esfuerzos/crear", {
@@ -58,7 +63,7 @@ const handleDatosEsfuerzo = async (event) => {
     });
 
     if (response.ok) {
-        goto("/eventos");
+        kmCompletados = kmCompletados + nuevoEsfuerzo.numKm;
     } else {
         error = await response.json();
     }
@@ -94,7 +99,10 @@ const handleDatosEsfuerzo = async (event) => {
     </header>
     <main class="row">
         <div class="col-12 text-center">
-            <p class="display-1">{evento.objetivoKm} km</p>
+            <p class="display-2">{kmCompletados}/<small class="text-muted">{evento.objetivoKm} km</small></p>
+        </div>
+        <div class="col-12">
+            <EventoProgressBar {kmCompletados} objetivoKm={evento.objetivoKm} />
         </div>
         <div class="col-12">
             <p><strong>{literalModalidad}</strong></p>

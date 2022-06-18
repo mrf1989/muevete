@@ -29,7 +29,7 @@ export let evento;
 
 const getDorsales = async (session) => {
     if (session.user) {
-        const response = await fetch(`/api/eventos/dorsales`);
+        const response = await fetch("/api/eventos/dorsales");
         if (response.ok) {
             const dorsales = await response.json();
             return dorsales.find(dorsal => dorsal.evento_id == evento._id);
@@ -37,13 +37,30 @@ const getDorsales = async (session) => {
     }
 }
 
-let comprobarInscripcion = getDorsales($session);
+const getEsfuerzos = async (evento) => {
+    const response = await fetch(`/api/eventos/esfuerzos?evento=${evento._id}`);
+    if (response.ok) {
+        return await response.json();
+    }
+}
+
+const resolverPromises = async () => {
+    let dorsal = await getDorsales($session);
+    let esfuerzos = await getEsfuerzos(evento);
+
+    return {
+        dorsal,
+        esfuerzos
+    }
+}
+
+const resuelvePromises = resolverPromises();
 </script>
 
 <div class="col-12">
     {#if evento}
-        {#await comprobarInscripcion then dorsal}
-        <EventoContainer {evento} {dorsal} />            
+        {#await resuelvePromises then res}
+        <EventoContainer {evento} dorsal={res.dorsal} esfuerzos={res.esfuerzos} />            
         {/await}
     {/if}
 </div>
