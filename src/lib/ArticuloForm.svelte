@@ -34,7 +34,7 @@ const getDatosArticulo = () => {
     </div>
     <div class="form-group">
         <label for="cuerpo">Cuerpo del artículo</label>
-        <textarea bind:value={cuerpo} rows="5" class="form-control" id="cuerpo" required></textarea>
+        <textarea bind:value={cuerpo} rows="10" class="form-control" id="cuerpo" required></textarea>
     </div>
     <div class="form-row">
         <div class="form-group col-lg-6">
