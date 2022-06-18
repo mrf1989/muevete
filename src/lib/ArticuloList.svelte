@@ -1,36 +1,31 @@
 <script>
-export let evento;
+export let articulo;
 
-const borrarEvento = async () => {
-    const response = await fetch("/api/eventos/borrar", {
+const borrarArticulo = async () => {
+    const response = await fetch("/api/articulos/borrar", {
         method: "DELETE",
         body: JSON.stringify({
-            eventoId: evento._id
+            articuloId: articulo._id
         })
     });
 
     if (response.ok) {
-        document.location = "/admin/eventos";
+        document.location = "/admin/articulos";
     }
 }
 </script>
 
 <div class="card mb-2">
     <div class="card-body">
-        <h5 class="card-title">{evento.nombre} <small class="card-subtitle text-muted">{evento.objetivoKm} km</small></h5>
+        <h5 class="card-title">{articulo.titulo}</h5>
         <div class="card-text">
-            {#if evento.dorsal}
-            <div class="d-flex flex-row">
-                Dorsal: {evento.dorsal.num.toString().padStart(4, 0)}
-            </div>
-            {/if}
             <div class="d-flex flex-row justify-content-between">
                 <div>
-                    Fecha de finalización del evento: {new Date(evento.fechaFin).toLocaleDateString()}
+                    Fecha de publicación: {new Date(articulo.fecha).toLocaleDateString()}
                 </div>
                 <div class="btn-group" role="group">
-                    <a href={`/eventos/${evento._id}`} class="btn btn-primary">Ir a evento</a>
-                    <a href={`/eventos/form/${evento._id}`} class="btn btn-secondary">Editar</a>
+                    <a href={`/articulos/${articulo._id}`} class="btn btn-primary">Ir al artículo</a>
+                    <a href={`/articulos/form/${articulo._id}`} class="btn btn-secondary">Editar</a>
                     <button data-toggle="modal" data-target="#borrarModal" class="btn btn-secondary">Eliminar</button>
                 </div>
             </div>
@@ -42,14 +37,14 @@ const borrarEvento = async () => {
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">¿Seguro que quieres eliminar el evento?</h5>
+                <h5 class="modal-title">¿Seguro que quieres eliminar el artículo?</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button on:click={borrarEvento} type="button" class="btn btn-danger" data-dismiss="modal">Sí, eliminar</button>
+                <button on:click={borrarArticulo} type="button" class="btn btn-danger" data-dismiss="modal">Sí, eliminar</button>
             </div>
         </div>
     </div>
