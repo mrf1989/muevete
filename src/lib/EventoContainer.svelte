@@ -2,6 +2,7 @@
 import DorsalForm from "$lib/DorsalForm.svelte";
 import EsfuerzoForm from "$lib/EsfuerzoForm.svelte";
 import EventoProgressBar from "$lib/EventoProgressBar.svelte";
+import DorsalContainer from "$lib/DorsalContainer.svelte";
 import { session } from "$app/stores";
 import { getDate, getKmCompletados } from "$lib/utils";
 import { goto } from "$app/navigation";
@@ -80,7 +81,7 @@ const handleDatosEsfuerzo = async (event) => {
             <a href="/eventos/form/{evento._id}">Editar evento</a>
             {/if}
         </small>
-        <div class="d-flex flex-row-reverse">
+        <div class="d-flex flex-row-reverse mb-2">
             {#if $session.user}
                 {#if !dorsal}
                 <button class="btn btn-primary" data-toggle="modal" data-target="#dorsalForm">Obtener dorsal</button>
@@ -88,9 +89,12 @@ const handleDatosEsfuerzo = async (event) => {
                     <span class="text-danger">{error.message}</span>
                     {/if}
                 {:else}
-                <button class="btn btn-primary" data-toggle="modal" data-target="#esfuerzoForm">
-                    Añadir kilómetros con dorsal {dorsal.num.toString().padStart(4, 0)}
-                </button>
+                <div class="btn-group" role="group">
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#esfuerzoForm">
+                        Añadir kilómetros con dorsal {dorsal.num.toString().padStart(4, 0)}
+                    </button>
+                    <button class="btn btn-secondary" data-toggle="modal" data-target="#pdfModal">Descargar dorsal</button>
+                </div>
                 {/if}
             {:else}
             <a href="/usuarios/login" class="btn btn-primary">Obtener dorsal</a>
@@ -124,4 +128,5 @@ const handleDatosEsfuerzo = async (event) => {
 <DorsalForm on:post={handleDatosDorsal} />
 {#if dorsal}
 <EsfuerzoForm on:post={handleDatosEsfuerzo} {dorsal} />
+<DorsalContainer {dorsal} {evento} />
 {/if}
