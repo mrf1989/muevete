@@ -1,10 +1,13 @@
 <script>
 import { session } from "$app/stores";
+import { marked } from "marked";
 
 export let articulo;
 export let autor;
 
 const colArticulo = articulo.enlaceImagen ? 7 : 12;
+
+$: markup = marked(articulo.cuerpo);
 </script>
 
 <article>
@@ -26,11 +29,11 @@ const colArticulo = articulo.enlaceImagen ? 7 : 12;
         </div>
         {/if}
         <div class="col-lg-{colArticulo} order-lg-1">
-            {articulo.cuerpo}    
+            {@html markup}    
         </div>
     </main>
     {#if articulo.referencia}
-    <footer>
+    <footer class="row">
         <p>Referencia web: <a target="_blank" href="{articulo.referencia}">{articulo.referencia}</a></p>
     </footer>
     {/if}

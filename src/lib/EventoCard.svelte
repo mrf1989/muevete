@@ -30,7 +30,7 @@ const procesarSubtitulo = (str) => {
                     <strong>Fecha de fin:</strong> {new Date(evento.fechaFin).toLocaleDateString()}
                 </div>
             </div>
-            <div class="row mt-2">
+            <div class="row mt-3 align-items-center">
                 <div class="col">
                     <a href={`/eventos/${evento._id}`} class="btn btn-primary">Más info</a>
                 </div>

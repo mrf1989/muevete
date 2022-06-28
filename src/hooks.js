@@ -17,9 +17,9 @@ export const getSession = ({ locals }) => {
     return {
         apiURI: locals.apiURI && locals.apiURI,
         user: locals.user && {
-            id: locals.user._id,
-            username: locals.user.username,
-            rol: locals.user.rol
+            id: locals.user.usuario._id,
+            username: locals.user.usuario.username,
+            rol: locals.user.usuario.rol
         }
     }
 }

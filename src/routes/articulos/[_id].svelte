@@ -14,7 +14,7 @@ export const load = async ({ params, fetch, session }) => {
             return {
                 props: {
                     articulo,
-                    autor
+                    autor: autor.usuario
                 }
             }
         }
@@ -34,6 +34,6 @@ export let autor;
 
 <div class="col-12">
     {#if articulo && autor}
-    <ArticuloContainer articulo={articulo} autor={autor}/>
+    <ArticuloContainer {articulo} {autor}/>
     {/if}
 </div>
