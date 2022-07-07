@@ -33,7 +33,7 @@ const borrarEvento = async () => {
                     <a href={`/eventos/${evento._id}`} class="btn btn-primary">Ir a evento</a>
                     {#if $session.user.rol == "admin"}
                     <a href={`/eventos/form/${evento._id}`} class="btn btn-secondary">Editar</a>
-                    <button data-toggle="modal" data-target="#borrarModal" class="btn btn-secondary">Eliminar</button>
+                    <button data-toggle="modal" data-target="#borrar{evento._id}" class="btn btn-secondary">Eliminar</button>
                     {/if}
                 </div>
             </div>
@@ -41,7 +41,7 @@ const borrarEvento = async () => {
     </div>
 </div>
 
-<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="borrar{evento._id}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -49,6 +49,9 @@ const borrarEvento = async () => {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
                     <span aria-hidden="true">&times;</span>
                 </button>
+            </div>
+            <div class="modal-body">
+                <p>Se va a eliminar el evento "{evento.nombre}"</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
