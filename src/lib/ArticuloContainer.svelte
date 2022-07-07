@@ -34,7 +34,9 @@ $: markup = marked(articulo.cuerpo);
     </main>
     {#if articulo.referencia}
     <footer class="row">
-        <p>Referencia web: <a target="_blank" href="{articulo.referencia}">{articulo.referencia}</a></p>
+        <div class="col">
+            <p><a target="_blank" href="{articulo.referencia}">Referencia web</a></p>
+        </div>
     </footer>
     {/if}
 </article>

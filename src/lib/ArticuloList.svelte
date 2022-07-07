@@ -42,6 +42,9 @@ const borrarArticulo = async () => {
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <div class="modal-body">
+                <p>Se va a eliminar el artículo "{articulo.titulo}"</p>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 <button on:click={borrarArticulo} type="button" class="btn btn-danger" data-dismiss="modal">Sí, eliminar</button>

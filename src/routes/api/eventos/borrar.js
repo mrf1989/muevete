@@ -12,9 +12,8 @@ export const del = async ({ request, locals }) => {
     });
 
     if (response.ok) {
-        response.headers.set("location", "/admin/eventos");
         return {
-            status: 302,
+            status: 201,
             headers: response.headers
         }
     } else {
