@@ -26,14 +26,14 @@ const borrarArticulo = async () => {
                 <div class="btn-group" role="group">
                     <a href={`/articulos/${articulo._id}`} class="btn btn-primary">Ir al artículo</a>
                     <a href={`/articulos/form/${articulo._id}`} class="btn btn-secondary">Editar</a>
-                    <button data-toggle="modal" data-target="#borrarModal" class="btn btn-secondary">Eliminar</button>
+                    <button data-toggle="modal" data-target="#borrar{articulo._id}" class="btn btn-secondary">Eliminar</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="borrarModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="borrar{articulo._id}" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
