@@ -44,7 +44,9 @@ export let eventos;
                 <div class="card-body">
                     <div class="d-flex flex-row justify-content-between card-title">
                         <h3>Eventos deportivos</h3>
-                        <a class="btn btn-primary" href="/eventos/form">Nuevo evento</a>
+                        <div>
+                            <a class="btn btn-primary" href="/eventos/form">Nuevo evento</a>
+                        </div>
                     </div>
                     {#if eventos} 
                         {#each eventos as evento}
