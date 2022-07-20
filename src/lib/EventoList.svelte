@@ -27,7 +27,11 @@ const borrarEvento = async () => {
             {/if}
             <div class="d-flex flex-row justify-content-between">
                 <div>
+                {#if new Date(evento.fechaInicio) > Date.now()}
+                    <h6 class="text-info">Próximamente</h6>
+                {:else}
                     Fecha de finalización del evento: {new Date(evento.fechaFin).toLocaleDateString()}
+                {/if}
                 </div>
                 <div class="btn-group align-items-center" role="group">
                     {#if $session.user.rol == "admin"}
