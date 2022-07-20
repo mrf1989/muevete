@@ -18,7 +18,7 @@ const borrarEvento = async () => {
 
 <div class="card mb-2">
     <div class="card-body">
-        <h5 class="card-title">{evento.nombre} <small class="card-subtitle text-muted">{evento.objetivoKm} km</small></h5>
+        <h5 class="card-title"><a href={`/eventos/${evento._id}`}>{evento.nombre}</a> <small class="card-subtitle text-muted">{evento.objetivoKm} km</small></h5>
         <div class="card-text">
             {#if evento.dorsal}
             <div class="d-flex flex-row">
@@ -29,10 +29,9 @@ const borrarEvento = async () => {
                 <div>
                     Fecha de finalización del evento: {new Date(evento.fechaFin).toLocaleDateString()}
                 </div>
-                <div class="btn-group" role="group">
-                    <a href={`/eventos/${evento._id}`} class="btn btn-primary">Ir a evento</a>
+                <div class="btn-group align-items-center" role="group">
                     {#if $session.user.rol == "admin"}
-                    <a href={`/eventos/form/${evento._id}`} class="btn btn-secondary">Editar</a>
+                    <a href={`/eventos/form/${evento._id}`} class="btn btn-primary">Editar</a>
                     <button data-toggle="modal" data-target="#borrar{evento._id}" class="btn btn-secondary">Eliminar</button>
                     {/if}
                 </div>

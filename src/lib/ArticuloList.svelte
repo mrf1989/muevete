@@ -17,15 +17,14 @@ const borrarArticulo = async () => {
 
 <div class="card mb-2">
     <div class="card-body">
-        <h5 class="card-title">{articulo.titulo}</h5>
+        <a href={`/articulos/${articulo._id}`}><h5 class="card-title">{articulo.titulo}</h5></a>
         <div class="card-text">
             <div class="d-flex flex-row justify-content-between">
                 <div>
                     Fecha de publicación: {new Date(articulo.fecha).toLocaleDateString()}
                 </div>
-                <div class="btn-group" role="group">
-                    <a href={`/articulos/${articulo._id}`} class="btn btn-primary">Ir al artículo</a>
-                    <a href={`/articulos/form/${articulo._id}`} class="btn btn-secondary">Editar</a>
+                <div class="btn-group align-items-center" role="group">
+                    <a href={`/articulos/form/${articulo._id}`} class="btn btn-primary">Editar</a>
                     <button data-toggle="modal" data-target="#borrar{articulo._id}" class="btn btn-secondary">Eliminar</button>
                 </div>
             </div>

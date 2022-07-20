@@ -30,10 +30,11 @@ export let data;
     <div class="container">
         {#if $session.user.rol == "admin"}
         <div class="d-flex flex-row-reverse mb-2">
-            <a class="btn btn-primary" href="/eventos/form">Nuevo evento</a>
+            <a class="btn btn-primary d-none d-sm-inline-block" href="/eventos/form">+ Nuevo evento</a>
+            <a class="btn btn-primary d-inline-block d-sm-none" href="/eventos/form">+ Nuevo</a>
         </div>
         {/if}
-        <div class="row">
+        <div class="row mt-3">
         {#each data as evento }
             <EventoCard {evento} />
         {/each}

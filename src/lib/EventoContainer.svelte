@@ -90,9 +90,9 @@ const handleDatosEsfuerzo = async (event) => {
                     <span class="text-danger">{error.message}</span>
                     {/if}
                 {:else}
-                <div class="btn-group" role="group">
+                <div class="btn-group align-items-center" role="group">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#esfuerzoForm">
-                        Añadir kilómetros con dorsal {dorsal.num.toString().padStart(4, 0)}
+                        Añadir km con dorsal {dorsal.num.toString().padStart(4, 0)}
                     </button>
                     <button class="btn btn-secondary" data-toggle="modal" data-target="#pdfModal">Descargar dorsal</button>
                 </div>
