@@ -25,14 +25,14 @@ const getDatosEvento = () => {
 
 const validarDatos = () => {
     if (nombre && descripcion && objetivoKm &&
-        fechaInicio && fechaFin && (modalidad.length > 0) ) {
+        fechaInicio && fechaFin && (modalidad.length > 0)) {
             if (validarFechas(fechaInicio, fechaFin)) {
                 getDatosEvento();
             } else {
                 dispatch("post", { error: "Las fechas introducidas no son válidas. Además, la duración mínima del evento debe ser de 7 días." });
             }
     } else {
-        dispatch("post", { error: "Debe completar todos los campos obligatorios" });
+        dispatch("post", { error: "Debe completar todos los campos obligatorios marcados con un asterisco (*)" });
     }
 }
 

@@ -39,32 +39,37 @@ import { goto } from "$app/navigation";
 
 export let articulo;
 
-let error;
+$ : error = false;
 
 const handleDatosArticulo = async (event) => {
     const data = event.detail;
-    const articuloEditado = {
-        _id: articulo._id,
-        titulo: data.titulo,
-        subtitulo: data.subtitulo,
-        cuerpo: data.cuerpo,
-        categoria: data.categoria,
-        referencia: data.referencia,
-        enlaceImagen: data.enlaceImagen,
-    }
-    
-    const response = await fetch("/api/articulos/editar", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(articuloEditado)
-    });
 
-    if (response.ok) {
-        goto(`/articulos/${articulo._id}`);
+    if (data.error) {
+        error = data.error;
     } else {
-        error = await response.json();
+        const articuloEditado = {
+            _id: articulo._id,
+            titulo: data.titulo,
+            subtitulo: data.subtitulo,
+            cuerpo: data.cuerpo,
+            categoria: data.categoria,
+            referencia: data.referencia,
+            enlaceImagen: data.enlaceImagen,
+        }
+        
+        const response = await fetch("/api/articulos/editar", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(articuloEditado)
+        });
+    
+        if (response.ok) {
+            goto(`/articulos/${articulo._id}`);
+        } else {
+            error = await response.json();
+        }
     }
 }
 </script>
@@ -78,7 +83,7 @@ const handleDatosArticulo = async (event) => {
     {/if}
     {#if error}
     <div class="alert alert-warning" role="alert">
-        {error.message}
+        {error}
     </div>
     {/if}
 </div>
