@@ -82,7 +82,7 @@ const handleDatosEvento = async (event) => {
     <EventoForm on:post={handleDatosEvento} {evento} />
     {/if}
     {#if error}
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning mt-3" role="alert">
         {error}
     </div>
     {/if}

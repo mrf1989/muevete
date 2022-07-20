@@ -2,34 +2,39 @@
 import { goto } from "$app/navigation";
 import RegistroForm from "$lib/RegistroForm.svelte";
 
-let error;
+$ : error = false;
 
 const handleDatosUsuario = async (event) => {
     const data = event.detail;
-    const nuevoUsuario = {
-        username: data.username,
-        password: data.password,
-        nombre: data.nombre,
-        apellidos: data.apellidos,
-        email: data.email,
-        telefono: data.telefono,
-        fechaNacimiento: data.fechaNacimiento,
-        ciudad: data.ciudad,
-        rol: "voluntario"
-    }
-    
-    const response = await fetch("/api/usuarios/registro", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(nuevoUsuario)
-    });
 
-    if (response.ok) {
-        goto("/usuarios/login");
+    if (data.error) {
+        error = { message: data.error };
     } else {
-        error = await response.json();
+        const nuevoUsuario = {
+            username: data.username,
+            password: data.password,
+            nombre: data.nombre,
+            apellidos: data.apellidos,
+            email: data.email,
+            telefono: data.telefono,
+            fechaNacimiento: data.fechaNacimiento,
+            ciudad: data.ciudad,
+            rol: "voluntario"
+        }
+        
+        const response = await fetch("/api/usuarios/registro", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(nuevoUsuario)
+        });
+    
+        if (response.ok) {
+            goto("/usuarios/login");
+        } else {
+            error = await response.json();
+        }
     }
 }
 </script>
@@ -41,7 +46,7 @@ const handleDatosUsuario = async (event) => {
     </div>
     <RegistroForm on:signin={handleDatosUsuario} />
     {#if error}
-    <div class="alert alert-warning" role="alert">
+    <div class="alert alert-warning mt-3" role="alert">
         {error.message}
     </div>
     {/if}

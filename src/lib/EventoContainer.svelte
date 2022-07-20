@@ -81,6 +81,7 @@ const handleDatosEsfuerzo = async (event) => {
             <a href="/eventos/form/{evento._id}">Editar evento</a>
             {/if}
         </small>
+        {#if new Date(evento.fechaInicio) <= Date.now() && new Date(evento.fechaFin) >= Date.now()}
         <div class="d-flex flex-row-reverse mb-2">
             {#if $session.user}
                 {#if !dorsal}
@@ -100,6 +101,7 @@ const handleDatosEsfuerzo = async (event) => {
             <a href="/usuarios/login" class="btn btn-primary">Obtener dorsal</a>
             {/if}
         </div>
+        {/if}
     </header>
     <main class="row">
         <div class="col-12 text-center">
