@@ -23,6 +23,8 @@ import EventoCard from "$lib/EventoCard.svelte";
 import { session } from "$app/stores";
 
 export let data;
+
+data.sort((a, b) => new Date(a.fechaInicio) - new Date(b.fechaInicio));
 </script>
 
 <div>
