@@ -24,11 +24,13 @@ import { session } from "$app/stores";
 
 export let data;
 
-data.sort((a, b) => new Date(a.fechaInicio) - new Date(b.fechaInicio));
+data
+    .filter(evento => new Date(evento.fechaFin) >= Date.now())
+    .sort((a, b) => new Date(a.fechaInicio) - new Date(b.fechaInicio));
 </script>
 
 <div>
-    <h1 class="text-center">Eventos</h1>
+    <h1 class="text-center">Eventos deportivos</h1>
     <div class="container">
         {#if $session.user.rol == "admin"}
         <div class="d-flex flex-row-reverse mb-2">

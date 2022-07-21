@@ -29,6 +29,8 @@ const borrarEvento = async () => {
                 <div>
                 {#if new Date(evento.fechaInicio) > Date.now()}
                     <h6 class="text-info">Próximamente</h6>
+                {:else if new Date(evento.fechaFin) < Date.now()}
+                <h6 class="text-danger">Finalizado</h6>
                 {:else}
                     Fecha de finalización del evento: {new Date(evento.fechaFin).toLocaleDateString()}
                 {/if}

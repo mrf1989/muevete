@@ -44,7 +44,9 @@ const asignarDorsales = () => {
 }
 
 asignarDorsales();
-eventos.sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
+eventos
+    .filter(evento => new Date(evento.fechaFin) >= Date.now())
+    .sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
 </script>
 
 <div class="container">

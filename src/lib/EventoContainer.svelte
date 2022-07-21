@@ -12,6 +12,7 @@ export let dorsal;
 export let esfuerzos;
 
 $: kmCompletados = getKmCompletados(esfuerzos);
+$: listaEsfuerzos = esfuerzos;
 
 let error;
 
@@ -65,6 +66,7 @@ const handleDatosEsfuerzo = async (event) => {
 
     if (response.ok) {
         kmCompletados = kmCompletados + nuevoEsfuerzo.numKm;
+        listaEsfuerzos = [...listaEsfuerzos, nuevoEsfuerzo];
     } else {
         error = await response.json();
     }
@@ -125,6 +127,18 @@ const handleDatosEsfuerzo = async (event) => {
             <p><strong>Fecha de finalización</strong> {getDate(new Date(evento.fechaFin))}</p> 
         </div>
     </main>
+    {#if esfuerzos.length > 0}
+    <footer>
+        <h2>Esfuerzos realizados</h2>
+        {#each listaEsfuerzos as esfuerzo}
+        <div class="card mb-2">
+            <div class="card-body">
+                <strong>{esfuerzo.numKm} km</strong> ({esfuerzo.modalidad}) {esfuerzo.comentario}
+            </div>
+        </div>
+        {/each}
+    </footer>
+    {/if}
 </article>
 
 <DorsalForm on:post={handleDatosDorsal} />
