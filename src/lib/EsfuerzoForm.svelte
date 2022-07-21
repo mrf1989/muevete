@@ -10,6 +10,14 @@ const dispatch = createEventDispatcher();
 const getDatosEsfuerzo = () => {
     dispatch("post", { numKm, comentario, modalidad, dorsal_id });
 }
+
+const validarDatos = () => {
+    if (numKm && modalidad && dorsal_id) {
+        getDatosEsfuerzo();
+    } else {
+        dispatch("post", { error: "Debe completar todos los campos obligatorios marcados con un asterisco (*)" });
+    }
+}
 </script>
 
 <div class="modal fade" id="esfuerzoForm" tabindex="-1" role="dialog">
@@ -29,11 +37,11 @@ const getDatosEsfuerzo = () => {
                     </div>
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label for="numKm">Kilómetros</label>
+                            <label for="numKm">Kilómetros*</label>
                             <input bind:value={numKm} type="number" name="numKm" id="numKm" class="form-control">
                         </div>
                         <div class="col-md-6">
-                            <label for="modalidad">Modalidad</label>
+                            <label for="modalidad">Modalidad*</label>
                             <select bind:value={modalidad} class="form-control" name="modalidad" id="modalidad">
                                 <option disabled>Selecciona</option>
                                 <option value="caminata">Caminata</option>
@@ -48,7 +56,7 @@ const getDatosEsfuerzo = () => {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button on:click={getDatosEsfuerzo} type="button" class="btn btn-primary" data-dismiss="modal">Añadir esfuerzo</button>
+                <button on:click={validarDatos} type="button" class="btn btn-primary" data-dismiss="modal">Añadir esfuerzo</button>
             </div>
         </div>
     </div>

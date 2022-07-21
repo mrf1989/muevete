@@ -19,32 +19,36 @@ export const load = async ({ session }) => {
 import { goto } from "$app/navigation";;
 import EventoForm from "$lib/EventoForm.svelte";
 
-let error;
+$ : error = false;
 
 const handleDatosEvento = async (event) => {
     const data = event.detail;
 
-    const nuevoEvento = {
-        nombre: data.nombre,
-        descripcion: data.descripcion,
-        objetivoKm: data.objetivoKm,
-        fechaInicio: data.fechaInicio,
-        fechaFin: data.fechaFin,
-        modalidad: data.modalidad
-    }
-    
-    const response = await fetch("/api/eventos/publicar", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(nuevoEvento)
-    });
-
-    if (response.ok) {
-        goto("/eventos");
+    if (data.error) {
+        error = data.error;
     } else {
-        error = await response.json();
+        const nuevoEvento = {
+            nombre: data.nombre,
+            descripcion: data.descripcion,
+            objetivoKm: data.objetivoKm,
+            fechaInicio: data.fechaInicio,
+            fechaFin: data.fechaFin,
+            modalidad: data.modalidad
+        }
+        
+        const response = await fetch("/api/eventos/publicar", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(nuevoEvento)
+        });
+    
+        if (response.ok) {
+            goto("/eventos");
+        } else {
+            error = await response.json();
+        }
     }
 }
 </script>
@@ -55,8 +59,8 @@ const handleDatosEvento = async (event) => {
     </div>
     <EventoForm on:post={handleDatosEvento} />
     {#if error}
-    <div class="alert alert-warning" role="alert">
-        {error.message}
+    <div class="alert alert-warning mt-3" role="alert">
+        {error}
     </div>
     {/if}
 </div>

@@ -21,24 +21,32 @@ const getDatosArticulo = () => {
         titulo, subtitulo, cuerpo, categoria, referencia, enlaceImagen
     });
 }
+
+const validarDatos = () => {
+    if (titulo && subtitulo && cuerpo && categoria) {
+        getDatosArticulo();
+    } else {
+        dispatch("post", { error: "Debe completar todos los campos obligatorios marcados con un asterisco (*)" })
+    }
+}
 </script>
 
 <form>
     <div class="form-group">
-        <label for="titulo">Título</label>
+        <label for="titulo">Título*</label>
         <input bind:value={titulo} type="text" class="form-control" id="titulo" required>
     </div>
     <div class="form-group">
-        <label for="subtitulo">Subtítulo</label>
+        <label for="subtitulo">Subtítulo*</label>
         <input bind:value={subtitulo} type="text" class="form-control" id="subtitulo" required>
     </div>
     <div class="form-group">
-        <label for="cuerpo">Cuerpo del artículo</label>
+        <label for="cuerpo">Cuerpo del artículo*</label>
         <textarea bind:value={cuerpo} rows="10" class="form-control" id="cuerpo" required></textarea>
     </div>
     <div class="form-row">
         <div class="form-group col-lg-6">
-            <label for="categoria">Categoría</label>
+            <label for="categoria">Categoría*</label>
             <select bind:value={categoria} class="form-control" for="categoria" id="categoria" required>
                 <option value="noticias">Noticias</option>
                 <option value="comunicados">Comunicados</option>
@@ -54,7 +62,7 @@ const getDatosArticulo = () => {
         <label for="enlaceImagen">Enlace de imagen</label>
         <input bind:value={enlaceImagen} type="url" class="form-control" id="enlaceImagen">
     </div>
-    <button on:click|preventDefault={getDatosArticulo} class="btn btn-primary btn-block">
+    <button on:click|preventDefault={validarDatos} class="btn btn-primary btn-block">
     {#if !articulo}
         Publicar
     {:else}

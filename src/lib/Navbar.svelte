@@ -10,8 +10,8 @@ const logout = () => {
 }
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-    <a class="navbar-brand" href="/">Muévete APP</a>
+<nav class="row navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <a class="navbar-brand text-primary" href="/">Muévete APP</a>
     {#if $session.user}
     <span>¡Hola, {$session.user.username}!</span>
     {/if}
@@ -56,3 +56,9 @@ const logout = () => {
         </ul>
     </div>
 </nav>
+
+<style>
+.navbar {
+    border-bottom: 1px solid #eee;   
+}
+</style>

@@ -39,33 +39,37 @@ import { goto } from "$app/navigation";
 
 export let evento;
 
-let error;
+$ : error = false;
 
 const handleDatosEvento = async (event) => {
     const data = event.detail;
 
-    const eventoEditado = {
-        _id: evento._id,
-        nombre: data.nombre,
-        descripcion: data.descripcion,
-        objetivoKm: data.objetivoKm,
-        fechaInicio: data.fechaInicio,
-        fechaFin: data.fechaFin,
-        modalidad: data.modalidad
-    }
-    
-    const response = await fetch("/api/eventos/editar", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(eventoEditado)
-    });
-
-    if (response.ok) {
-        goto(`/eventos/${evento._id}`);
+    if (data.error) {
+        error = data.error;
     } else {
-        error = await response.json();
+        const eventoEditado = {
+            _id: evento._id,
+            nombre: data.nombre,
+            descripcion: data.descripcion,
+            objetivoKm: data.objetivoKm,
+            fechaInicio: data.fechaInicio,
+            fechaFin: data.fechaFin,
+            modalidad: data.modalidad
+        }
+        
+        const response = await fetch("/api/eventos/editar", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(eventoEditado)
+        });
+    
+        if (response.ok) {
+            goto(`/eventos/${evento._id}`);
+        } else {
+            error = await response.json();
+        }
     }
 }
 </script>
@@ -78,8 +82,8 @@ const handleDatosEvento = async (event) => {
     <EventoForm on:post={handleDatosEvento} {evento} />
     {/if}
     {#if error}
-    <div class="alert alert-warning" role="alert">
-        {error.message}
+    <div class="alert alert-warning mt-3" role="alert">
+        {error}
     </div>
     {/if}
 </div>

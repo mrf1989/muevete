@@ -20,6 +20,14 @@ const dispatch = createEventDispatcher();
 const getDatosUsuario = () => {
     dispatch("post", { nombre, apellidos, email, telefono, fechaNacimiento, ciudad });
 }
+
+const validarDatos = () => {
+    if (nombre && apellidos && email && fechaNacimiento) {
+        getDatosUsuario();
+    } else {
+        dispatch("post", { error: "Debe completar todos los campos obligatorios marcados con un asterisco (*)" });
+    }
+}
 </script>
 
 <div class="modal fade" id="usuarioForm" tabindex="-1" role="dialog">
@@ -34,15 +42,15 @@ const getDatosUsuario = () => {
             <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <label for="nombre">Nombre</label>
+                        <label for="nombre">Nombre*</label>
                         <input bind:value={nombre} type="text" class="form-control" id="nombre">
                     </div>
                     <div class="form-group">
-                        <label for="apellidos">Apellidos</label>
+                        <label for="apellidos">Apellidos*</label>
                         <input bind:value={apellidos} type="text" class="form-control" id="apellidos">
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">Email*</label>
                         <input bind:value={email} type="email" class="form-control" id="email">
                     </div>
                     <div class="form-group">
@@ -50,7 +58,7 @@ const getDatosUsuario = () => {
                         <input bind:value={telefono} type="tel" class="form-control" id="telefono">
                     </div>
                     <div class="form-group">
-                        <label for="fechaNacimiento">Fecha de nacimiento</label>
+                        <label for="fechaNacimiento">Fecha de nacimiento*</label>
                         <input bind:value={fechaNacimiento} type="date" class="form-control" id="fechaNacimiento">
                     </div>
                     <div class="form-group">
@@ -61,7 +69,7 @@ const getDatosUsuario = () => {
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button on:click={getDatosUsuario} type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+                <button on:click={validarDatos} type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
             </div>
         </div>
     </div>
