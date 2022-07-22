@@ -49,6 +49,10 @@ eventos
     .sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
 </script>
 
+<svelte:head>
+    <title>Mi perfil - Muévete APP</title>
+</svelte:head>
+
 <div class="container">
     <div class="row mb-2">
         <div class="col-md-4">

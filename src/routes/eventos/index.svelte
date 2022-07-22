@@ -29,6 +29,10 @@ data
     .sort((a, b) => new Date(a.fechaInicio) - new Date(b.fechaInicio));
 </script>
 
+<svelte:head>
+    <title>Eventos - Muévete APP</title>
+</svelte:head>
+
 <div>
     <h1 class="text-center">Eventos deportivos</h1>
     <div class="container">

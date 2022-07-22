@@ -25,6 +25,10 @@ import { session } from "$app/stores";
 export let data;
 </script>
 
+<svelte:head>
+    <title>Artículos - Muévete APP</title>
+</svelte:head>
+
 <div>
     <h1 class="text-center">Artículos</h1>
     <div class="container">

@@ -1,3 +1,6 @@
+<svelte:head>
+    <title>Muévete APP</title>
+</svelte:head>
 <div class="col-12">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">
