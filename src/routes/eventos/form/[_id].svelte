@@ -74,6 +74,10 @@ const handleDatosEvento = async (event) => {
 }
 </script>
 
+<svelte:head>
+    <title>Eventos - Muévete APP</title>
+</svelte:head>
+
 <div class="col-lg-8 offset-lg-2">
     <div class="text-center">
         <h1>Editar artículo</h1>

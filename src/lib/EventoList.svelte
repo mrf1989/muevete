@@ -35,12 +35,9 @@ const borrarEvento = async () => {
                     Fecha de finalización del evento: {new Date(evento.fechaFin).toLocaleDateString()}
                 {/if}
                 </div>
-                <div class="btn-group align-items-center" role="group">
-                    {#if $session.user.rol == "admin"}
-                    <a href={`/eventos/form/${evento._id}`} class="btn btn-primary">Editar</a>
-                    <button data-toggle="modal" data-target="#borrar{evento._id}" class="btn btn-secondary">Eliminar</button>
-                    {/if}
-                </div>
+                {#if $session.user.rol == "admin"}
+                <div><a href={`/eventos/form/${evento._id}`} class="btn btn-primary">Editar</a></div>
+                {/if}
             </div>
         </div>
     </div>

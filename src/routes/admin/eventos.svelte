@@ -27,13 +27,24 @@ export const load = async ({ fetch, session }) => {
 
 <script>
 import { session } from "$app/stores";
+import { filtraEventos } from "$lib/utils.js";
 import EventoList from "$lib/EventoList.svelte";
 
 export let eventos;
+
+let filtroModalidad;
+
+eventos = eventos.sort((a, b) => new Date(a.fechaInicio) - new Date(b.fechaInicio));
+
+$ : data = eventos;
+
+const filtrar = () => {
+    data = filtraEventos(eventos, filtroModalidad);
+}
 </script>
 
 <svelte:head>
-    <title>Administración - Muévete APP</title>
+    <title>Administración - Eventos - Muévete APP</title>
 </svelte:head>
 
 <div class="container">
@@ -53,8 +64,27 @@ export let eventos;
                             <a class="btn btn-primary d-inline-block d-sm-none" href="/eventos/form">+ Nuevo</a>
                         </div>
                     </div>
-                    {#if eventos} 
-                        {#each eventos as evento}
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <label class="input-group-text" for="filtroModalidadDeportiva">Modalidad</label>
+                                </div>
+                                <select bind:value={filtroModalidad} class="custom-select" id="filtroModalidadDeportiva">
+                                    <option selected>Todas</option>
+                                    <option value="caminata">Caminata</option>
+                                    <option value="carrera">Carrera</option>
+                                    <option value="bicicleta">Bicicleta</option>
+                                    <option value="natacion">Natación</option>
+                                </select>
+                                <div class="input-group-append">
+                                    <button on:click={filtrar} class="btn btn-outline-secondary" type="button">Aplicar filtro</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {#if data} 
+                        {#each data as evento}
                         <EventoList {evento} />
                         {/each}
                     {:else}

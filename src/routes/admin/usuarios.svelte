@@ -32,7 +32,7 @@ let usuariosPromise = getUsuarios($session);
 </script>
 
 <svelte:head>
-    <title>Administración - Muévete APP</title>
+    <title>Administración - Usuarios - Muévete APP</title>
 </svelte:head>
 
 <div class="container">

@@ -44,7 +44,7 @@ const asignarDorsales = () => {
 }
 
 asignarDorsales();
-eventos
+let eventosProcesados = eventos
     .filter(evento => new Date(evento.fechaFin) >= Date.now())
     .sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
 </script>
@@ -62,7 +62,7 @@ eventos
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Mis eventos activos</h3>
-                    {#each eventos as evento}
+                    {#each eventosProcesados as evento}
                         <EventoList {evento} />
                     {/each}
                 </div>

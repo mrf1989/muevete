@@ -34,7 +34,7 @@ export let articulos;
 </script>
 
 <svelte:head>
-    <title>Administración - Muévete APP</title>
+    <title>Administración - Artículos - Muévete APP</title>
 </svelte:head>
 
 <div class="container">

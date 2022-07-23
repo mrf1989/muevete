@@ -133,7 +133,19 @@ const handleDatosEsfuerzo = async (event) => {
         {#each listaEsfuerzos as esfuerzo}
         <div class="card mb-2">
             <div class="card-body">
-                <strong>{esfuerzo.numKm} km</strong> ({esfuerzo.modalidad}) {esfuerzo.comentario}
+                <div class="d-flex justify-content-between">
+                    <span><strong>{esfuerzo.numKm} km</strong> ({esfuerzo.modalidad})
+                    {esfuerzo.comentario ? esfuerzo.comentario : ""}</span>
+                    {#if dorsal.usuario_id == esfuerzo.usuario_id}
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+                        class="twitter-share-button"
+                        data-text={`He realizado un esfuerzo de ${esfuerzo.numKm} km (${esfuerzo.modalidad}) para el evento '${evento.nombre}'`}
+                        data-url="https://mueveteapp.herokuapp.com/" data-hashtags="MxLQnP" data-lang="es"
+                        data-show-count="false">Tweet</a><script
+                        async src="https://platform.twitter.com/widgets.js"
+                        charset="utf-8"></script>
+                    {/if}
+                </div>
             </div>
         </div>
         {/each}
