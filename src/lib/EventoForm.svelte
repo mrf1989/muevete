@@ -5,6 +5,7 @@ import { getDate } from "$lib/utils";
 export let evento;
 
 let nombre, descripcion, objetivoKm, fechaInicio, fechaFin, modalidad = [];
+let modalConfirmacion = false;
 
 if (evento) {
     nombre = evento.nombre;
@@ -38,9 +39,25 @@ const validarDatos = () => {
 
 const validarFechas = (inicio, fin) => {
     const fechaActual = new Date(getDate(new Date(Date.now())));
-    const fechaInicioValida = new Date(inicio) >= fechaActual;
+    let fechaInicioValida = false;
+
+    if (!evento) {
+        fechaInicioValida = new Date(inicio) >= fechaActual;
+    } else {
+        fechaInicioValida = new Date(inicio).valueOf() == new Date(evento.fechaInicio).valueOf();
+    }
+
     const duracionMinima = ((new Date(fin) - new Date(inicio)) / 86400000) >= 7;
     return fechaInicioValida && duracionMinima;
+}
+
+const permiteConfirmacion = () => {
+    if (nombre && descripcion && objetivoKm &&
+        fechaInicio && fechaFin && (modalidad.length > 0)) {
+            modalConfirmacion = true;
+    } else {
+        dispatch("post", { error: "Debe completar todos los campos obligatorios marcados con un asterisco (*)" });
+    }
 }
 </script>
 
@@ -78,7 +95,7 @@ const validarFechas = (inicio, fin) => {
             <input bind:value={fechaFin} type="date" class="form-control" id="fechaFin">
         </div>
     </div>
-    <button on:click|preventDefault={validarDatos} class="btn btn-primary btn-block">
+    <button on:click|preventDefault={permiteConfirmacion} data-toggle="modal" data-target="#confirmacion" class="btn btn-primary btn-block">
     {#if !evento}
         Publicar
     {:else}
@@ -86,3 +103,32 @@ const validarFechas = (inicio, fin) => {
     {/if} evento
     </button>
 </form>
+
+{#if modalConfirmacion}
+<div class="modal fade" id="confirmacion" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¿Seguro que quieres crear el evento?</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Cerrar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p><strong>{nombre}</strong></p>
+                <p>{descripcion}</p>
+                <ul>
+                    <li>Objetivo: {objetivoKm} kms</li>
+                    <li>Modalidad: {modalidad}</li>
+                    <li>Fecha de inicio: {fechaInicio}</li>
+                    <li>Fecha de finalización: {fechaFin}</li>
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button on:click={validarDatos} type="button" class="btn btn-danger" data-dismiss="modal">Sí, publicar</button>
+            </div>
+        </div>
+    </div>
+</div>
+{/if}

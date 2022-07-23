@@ -57,6 +57,10 @@ const resolverPromises = async () => {
 const resuelvePromises = resolverPromises();
 </script>
 
+<svelte:head>
+    <title>Eventos - Muévete APP</title>
+</svelte:head>
+
 <div class="col-12">
     {#if evento}
         {#await resuelvePromises then res}

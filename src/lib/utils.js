@@ -105,3 +105,11 @@ export const getDorsalPDF = async (dorsal, evento) => {
     });
     return await pdfDoc.saveAsBase64({ dataUri: true});
 }
+
+export const filtraEventos = (data, filtroModalidad) => {
+    let eventos = data;
+    if (filtroModalidad != "Todas") {
+        eventos = eventos.filter(evento => evento.modalidad.indexOf(filtroModalidad) >= 0);
+    }
+    return eventos;
+}

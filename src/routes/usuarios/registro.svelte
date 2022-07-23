@@ -39,6 +39,10 @@ const handleDatosUsuario = async (event) => {
 }
 </script>
 
+<svelte:head>
+    <title>Registro de usuario - Muévete APP</title>
+</svelte:head>
+
 <div class="col-md-8 offset-md-2">
     <div class="text-center">
         <h1>Registro</h1>

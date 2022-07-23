@@ -32,6 +32,10 @@ export let articulo;
 export let autor;
 </script>
 
+<svelte:head>
+    <title>Artículos - Muévete APP</title>
+</svelte:head>
+
 <div class="col-12">
     {#if articulo && autor}
     <ArticuloContainer {articulo} {autor}/>

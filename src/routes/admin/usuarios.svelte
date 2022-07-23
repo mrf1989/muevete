@@ -31,6 +31,10 @@ const getUsuarios = async (session) => {
 let usuariosPromise = getUsuarios($session);
 </script>
 
+<svelte:head>
+    <title>Administración - Usuarios - Muévete APP</title>
+</svelte:head>
+
 <div class="container">
     <div class="row">
         <div class="col-12">
