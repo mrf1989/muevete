@@ -41,6 +41,7 @@ const logout = () => {
                     <a href="/admin/eventos" class="dropdown-item">Eventos</a>
                     <a href="/admin/articulos" class="dropdown-item">Artículos</a>
                     <a href="/admin/usuarios" class="dropdown-item">Usuarios</a>
+                    <a href="/admin/newsletters" class="dropdown-item">Newsletters</a>
                 </div>
             </li>
             {:else}
