@@ -113,3 +113,41 @@ export const filtraEventos = (data, filtroModalidad) => {
     }
     return eventos;
 }
+
+export const getNewsletter = (newsletter) => {
+    const enlacesArticulos = newsletter.enlaces.filter(enlace => enlace.tipo == "articulos");
+    const enlacesEventos = newsletter.enlaces.filter(enlace => enlace.tipo == "eventos");
+    let listaArticulos = "";
+    let listaEventos = "";
+
+    if (enlacesArticulos.length > 0) {
+        enlacesArticulos.forEach(enlace => {
+            listaArticulos = listaArticulos.concat(`
+                <li><a href="${`https://mueveteapp.herokuapp.com/articulos/${enlace.enlace}`}">${enlace.titulo}</a></li>
+            `);
+        });
+    }
+
+    if (enlacesEventos.length > 0) {
+        enlacesEventos.forEach(enlace => {
+            listaEventos = listaEventos.concat(`
+                <li><a href="${`https://mueveteapp.herokuapp.com/eventos/${enlace.enlace}`}">${enlace.titulo}</a></li>
+            `);
+        });
+    }
+
+    const content = `<div>
+        <div><h2>${newsletter.titulo}</h2></div>
+        <div><p>${newsletter.cuerpo}</p></div>
+        ${listaArticulos.length > 0 ? `<div>
+        <h3>Artículos</h3>
+        <ul>${listaArticulos}</ul>
+        </div>` : ""}
+        ${listaEventos.length > 0 ? `<div>
+        <h3>Eventos</h3>
+        <ul>${listaEventos}</ul>
+        </div>` : ""}
+    </div>`;
+
+    return content;
+}
