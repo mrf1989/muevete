@@ -28,8 +28,19 @@ export const load = async ({ fetch, session }) => {
 <script>
 import { session } from "$app/stores";
 import NewsletterList from "$lib/NewsletterList.svelte";
+import { getUltimaNewsletterEnviada, diasEntreFechas } from "$lib/utils";
 
 export let newsletters;
+const ultimaNewsletterEnviada = getUltimaNewsletterEnviada(newsletters);
+
+$ : envioDisponible = ultimaNewsletterEnviada ?
+    diasEntreFechas(new Date(ultimaNewsletterEnviada.fechaEnvio), new Date(Date.now())) >= 15
+    : true;
+
+const handleEnvioDisponible = (event) => {
+    envioDisponible = event.detail.envioDisponible;
+}
+
 </script>
 
 <svelte:head>
@@ -55,7 +66,7 @@ export let newsletters;
                     </div>
                     {#if newsletters}
                         {#each newsletters as newsletter}
-                        <NewsletterList {newsletter} />
+                        <NewsletterList on:post={handleEnvioDisponible} {newsletter} {envioDisponible}/>
                         {/each}
                     {:else}
                         <p>No existen newsletters.</p>
