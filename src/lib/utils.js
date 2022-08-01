@@ -115,7 +115,7 @@ export const filtraEventos = (data, filtroModalidad) => {
 }
 
 export const getUltimaNewsletterEnviada = (allNewsletters) => {
-    const newsletters = allNewsletters.filter(newsletter => newsletter.fechaEnvio);
+    const newsletters = allNewsletters.filter(n => n.fechaEnvio);
     let newsletter = undefined;
     
     if (newsletters.length > 0) {
@@ -136,8 +136,7 @@ export const getUltimaNewsletterEnviada = (allNewsletters) => {
 
 export const diasEntreFechas = (fechaA, fechaB) => {
     const miliseconds = Math.abs(fechaB.getTime() - fechaA.getTime());
-    const dias = Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
-    return dias;
+    return Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
 }
 
 export const getNewsletter = (newsletter) => {
@@ -162,7 +161,7 @@ export const getNewsletter = (newsletter) => {
         });
     }
 
-    const content = `<div>
+    return `<div>
         <div><h2>${newsletter.titulo}</h2></div>
         <div><p>${newsletter.cuerpo}</p></div>
         ${listaArticulos.length > 0 ? `<div>
@@ -174,6 +173,4 @@ export const getNewsletter = (newsletter) => {
         <ul>${listaEventos}</ul>
         </div>` : ""}
     </div>`;
-
-    return content;
 }

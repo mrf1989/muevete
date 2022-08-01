@@ -1,4 +1,5 @@
-import { getHeaders, getNewsletter } from "$lib/utils";
+import { getNewsletter } from "$lib/utils";
+import { api } from "./api";
 
 export const post = async ({ request }) => {
     const body = await request.json();
@@ -55,28 +56,10 @@ export const post = async ({ request }) => {
 }
 
 export const put = async ({ request, locals }) => {
-    const headers = getHeaders(request);
-    const body = await request.json();
-    const apiURI = locals.apiURI;
-
-    const response = await fetch(`${apiURI}/api/admin/newsletters`, {
+    return await api({
+        request,
+        locals,
         method: "PUT",
-        headers,
-        body: JSON.stringify(body)
+        error: "No se ha podido registrar el envío de la newsletter."
     });
-
-    if (response.ok) {
-        return {
-            status: 201,
-            headers: response.headers,
-            body: await response.json()
-        }
-    } else {
-        return {
-            status: 500,
-            body: JSON.stringify({
-                message: "No se ha podido registrar el envío de la newsletter."
-            })
-        }
-    }
 }
