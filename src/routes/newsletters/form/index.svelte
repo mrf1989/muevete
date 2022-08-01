@@ -39,7 +39,6 @@ $ : error = false;
 
 const handleDatosNewsletter = async (event) => {
     const data = event.detail;
-    console.log(data);
 
     if (data.error) {
         error = data.error;

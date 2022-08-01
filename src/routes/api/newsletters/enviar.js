@@ -22,16 +22,15 @@ export const post = async ({ request }) => {
             value: getNewsletter(newsletter)
         }],
         from: {
-            email: "mruano@us.es",
+            email: `${process.env.VITE_SENDGRID_EMAIL}`,
             name: "Muévete APP"
         },
         reply_to: {
-            email: "mruano@us.es",
+            email: `${process.env.VITE_SENDGRID_EMAIL}`,
             name: "Muévete APP"
         }
     }
 
-    console.log(JSON.parse(JSON.stringify(data)));
     const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
         method: "POST",
         headers: headers,

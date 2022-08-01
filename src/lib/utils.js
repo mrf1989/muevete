@@ -114,6 +114,32 @@ export const filtraEventos = (data, filtroModalidad) => {
     return eventos;
 }
 
+export const getUltimaNewsletterEnviada = (allNewsletters) => {
+    const newsletters = allNewsletters.filter(newsletter => newsletter.fechaEnvio);
+    let newsletter = undefined;
+    
+    if (newsletters.length > 0) {
+        newsletter = newsletters[0]
+
+        newsletters.forEach((n) => {
+            if (
+                n.fechaEnvio &&
+                (n.fechaEnvio > newsletter.fechaEnvio)
+            ) {
+              newsletter = n;
+            }
+        });
+    }
+
+    return newsletter;
+}
+
+export const diasEntreFechas = (fechaA, fechaB) => {
+    const miliseconds = Math.abs(fechaB.getTime() - fechaA.getTime());
+    const dias = Math.ceil(miliseconds / (1000 * 60 * 60 * 24));
+    return dias;
+}
+
 export const getNewsletter = (newsletter) => {
     const enlacesArticulos = newsletter.enlaces.filter(enlace => enlace.tipo == "articulos");
     const enlacesEventos = newsletter.enlaces.filter(enlace => enlace.tipo == "eventos");

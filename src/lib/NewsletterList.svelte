@@ -1,10 +1,22 @@
 <script>
+import { createEventDispatcher } from "svelte";
 export let newsletter;
+export let envioDisponible;
+
+const dispatch = createEventDispatcher();
+
+const setEnvioDisponible = () => {
+    dispatch("post", { envioDisponible });
+}
+
+$ : envioDisponible;
 $ : msgExitoEnvio = false;
 $ : msgFracasoEnvio = false;
-$ : newsletter.fechaEnvio = false;
+$ : newsletter.fechaEnvio = newsletter.fechaEnvio ? newsletter.fechaEnvio : false;
 
 export const enviarNewsletter = async (newsletter) => {
+    msgExitoEnvio = false;
+    msgFracasoEnvio = false;
     const response = await fetch("/api/admin/usuarios");
     const headers = new Headers({
         "Content-Type": "application/json"
@@ -34,9 +46,10 @@ export const enviarNewsletter = async (newsletter) => {
             });
 
             if (responseRegistroEnvio.ok) {
+                envioDisponible = false;
                 msgExitoEnvio = confirmacionEnvio.message;
-                console.log(await responseRegistroEnvio.json());
                 newsletter.fechaEnvio = new Date(Date.now());
+                setEnvioDisponible();
             } else {
                 msgFracasoEnvio = "La newsletter se ha enviado, pero el sistema no ha podido registrar la fecha de envío";
             }
@@ -96,14 +109,16 @@ export const enviarNewsletter = async (newsletter) => {
                     </ul>
                 </div>
             </div>
-            {#if !newsletter.fechaEnvio}
+            {#if !newsletter.fechaEnvio && envioDisponible}
             <button
                 class="btn btn-primary"
                 data-toggle="modal"
                 data-target={`#modal${newsletter._id}`}>Enviar newsletter
             </button>
+            {:else if newsletter.fechaEnvio}
+            <strong>Newsletter enviada el {new Date(newsletter.fechaEnvio).toLocaleDateString()}</strong>
             {:else}
-            <p>Newsletter enviada el {new Date(newsletter.fechaEnvio).toLocaleDateString()}</p>
+            No es posible realizar el envío de la newsletter, ya que han pasado menos de 15 días desde el último envío.
             {/if}
         </div>
     </div>
