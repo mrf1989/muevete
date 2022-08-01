@@ -8,12 +8,16 @@ export const load = async ({ fetch, session }) => {
     }
 
     const responseUsuario = await fetch(`${session.apiURI}/api/usuarios/${session.user.id}`);
+    const responseEsfuerzos = await fetch(`${session.apiURI}/api/esfuerzos/usuario/${session.user.id}`);
 
-    if (responseUsuario.ok) {
+    if (responseUsuario.ok && responseEsfuerzos.ok) {
         const dataUsuario = await responseUsuario.json();
+        const dataEsfuerzos = await responseEsfuerzos.json();
+
         return {
             props: {
                 dataUsuario,
+                dataEsfuerzos
             }
         }
     } else {
@@ -30,6 +34,7 @@ import UsuarioCard from "$lib/UsuarioCard.svelte";
 import EventoList from "$lib/EventoList.svelte";
 
 export let dataUsuario;
+export let dataEsfuerzos;
 
 const usuario = dataUsuario.usuario;
 const eventos = dataUsuario.eventos;
@@ -47,6 +52,9 @@ asignarDorsales();
 let eventosProcesados = eventos
     .filter(evento => new Date(evento.fechaFin) >= Date.now())
     .sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
+
+// TODO Obtener esfuerzos en los últimos 7 días
+console.log(dataEsfuerzos);
 </script>
 
 <svelte:head>
