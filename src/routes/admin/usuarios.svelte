@@ -17,6 +17,7 @@ export const load = async ({ session }) => {
 
 <script>
 import { session } from "$app/stores";
+import UsuarioList from "$lib/UsuarioList.svelte";
 
 const getUsuarios = async (session) => {
     const response = await fetch("/api/admin/usuarios");
@@ -50,11 +51,9 @@ let usuariosPromise = getUsuarios($session);
                     </div>
                     {#await usuariosPromise then usuarios}
                         <p>Usuarios totales en el sistema: {usuarios.length}</p>
-                        <ul>
-                            {#each usuarios as usuario}
-                            <li><strong>{usuario.username}</strong>: <a href="mailto:{usuario.email}">{usuario.email}</a></li>
-                            {/each}
-                        </ul>
+                        {#each usuarios as usuario}
+                        <UsuarioList {usuario} />
+                        {/each}
                     {/await}
                 </div>
             </div>
