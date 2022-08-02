@@ -212,11 +212,47 @@ export const getDataUltimosEsfuerzos = (dataEsfuerzos) => {
         datasets: [
             {
                 label: "Km totales",
-                borderColor: "#2b7bd2",
+                borderColor: "#007bff",
                 data: dataUltimosEsfuerzos,
-                backgroundColor: "#2b7bd2",
-                fill: true
+                backgroundColor: "rgb(74, 133, 247, 0.4)",
+                fill: true,
+                pointBackgroundColor: "#007bff"
             }
         ]
     }
+}
+
+export const getConfigEsfuerzosChart = (dataEsfuerzos) => {
+    const esfuerzosGrandes = dataEsfuerzos.datasets[0]
+        .data.find(e => e > 100);
+    let escala = 20;
+    
+    if (esfuerzosGrandes) {
+        escala = 50;
+    }
+
+    return {
+        type: 'line',
+        data: dataEsfuerzos,
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: "Kilómetros"
+                    },
+                    ticks: {
+                        stepSize: escala
+                    }
+                }
+            },
+            plugins:{
+                legend: {
+                    display:false
+                }
+            }
+        }
+    };
 }
