@@ -39,35 +39,44 @@ import { goto } from "$app/navigation";
 
 export let articulo;
 
-let error;
+$ : error = false;
 
 const handleDatosArticulo = async (event) => {
     const data = event.detail;
-    const articuloEditado = {
-        _id: articulo._id,
-        titulo: data.titulo,
-        subtitulo: data.subtitulo,
-        cuerpo: data.cuerpo,
-        categoria: data.categoria,
-        referencia: data.referencia,
-        enlaceImagen: data.enlaceImagen,
-    }
-    
-    const response = await fetch("/api/articulos/editar", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(articuloEditado)
-    });
 
-    if (response.ok) {
-        goto(`/articulos/${articulo._id}`);
+    if (data.error) {
+        error = data.error;
     } else {
-        error = await response.json();
+        const articuloEditado = {
+            _id: articulo._id,
+            titulo: data.titulo,
+            subtitulo: data.subtitulo,
+            cuerpo: data.cuerpo,
+            categoria: data.categoria,
+            referencia: data.referencia,
+            enlaceImagen: data.enlaceImagen,
+        }
+        
+        const response = await fetch("/api/articulos/editar", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(articuloEditado)
+        });
+    
+        if (response.ok) {
+            goto(`/articulos/${articulo._id}`);
+        } else {
+            error = await response.json();
+        }
     }
 }
 </script>
+
+<svelte:head>
+    <title>Artículos - Muévete APP</title>
+</svelte:head>
 
 <div class="col-lg-8 offset-lg-2">
     <div class="text-center">
@@ -77,8 +86,8 @@ const handleDatosArticulo = async (event) => {
     <ArticuloForm on:post={handleDatosArticulo} articulo={articulo} />
     {/if}
     {#if error}
-    <div class="alert alert-warning" role="alert">
-        {error.message}
+    <div class="alert alert-warning mt-3" role="alert">
+        {error}
     </div>
     {/if}
 </div>

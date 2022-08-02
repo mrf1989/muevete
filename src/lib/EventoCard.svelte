@@ -17,6 +17,9 @@ const procesarSubtitulo = (str) => {
 <div class="col-lg-4">
     <div class="card mb-3">
         <div class="card-body">
+            {#if new Date(evento.fechaInicio) > Date.now()}
+            <h6 class="text-info">Próximamente</h6>
+            {/if}
             <h5 class="card-title">{evento.nombre}</h5>
             <p class="card-text">{procesarSubtitulo(evento.descripcion)}</p>
             <div class="row">

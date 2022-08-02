@@ -12,6 +12,7 @@ export let dorsal;
 export let esfuerzos;
 
 $: kmCompletados = getKmCompletados(esfuerzos);
+$: listaEsfuerzos = esfuerzos;
 
 let error;
 
@@ -65,6 +66,7 @@ const handleDatosEsfuerzo = async (event) => {
 
     if (response.ok) {
         kmCompletados = kmCompletados + nuevoEsfuerzo.numKm;
+        listaEsfuerzos = [...listaEsfuerzos, nuevoEsfuerzo];
     } else {
         error = await response.json();
     }
@@ -81,6 +83,7 @@ const handleDatosEsfuerzo = async (event) => {
             <a href="/eventos/form/{evento._id}">Editar evento</a>
             {/if}
         </small>
+        {#if new Date(evento.fechaInicio) <= Date.now() && new Date(evento.fechaFin) >= Date.now()}
         <div class="d-flex flex-row-reverse mb-2">
             {#if $session.user}
                 {#if !dorsal}
@@ -89,9 +92,9 @@ const handleDatosEsfuerzo = async (event) => {
                     <span class="text-danger">{error.message}</span>
                     {/if}
                 {:else}
-                <div class="btn-group" role="group">
+                <div class="btn-group align-items-center" role="group">
                     <button class="btn btn-primary" data-toggle="modal" data-target="#esfuerzoForm">
-                        Añadir kilómetros con dorsal {dorsal.num.toString().padStart(4, 0)}
+                        Añadir km con dorsal {dorsal.num.toString().padStart(4, 0)}
                     </button>
                     <button class="btn btn-secondary" data-toggle="modal" data-target="#pdfModal">Descargar dorsal</button>
                 </div>
@@ -100,6 +103,7 @@ const handleDatosEsfuerzo = async (event) => {
             <a href="/usuarios/login" class="btn btn-primary">Obtener dorsal</a>
             {/if}
         </div>
+        {/if}
     </header>
     <main class="row">
         <div class="col-12 text-center">
@@ -123,6 +127,30 @@ const handleDatosEsfuerzo = async (event) => {
             <p><strong>Fecha de finalización</strong> {getDate(new Date(evento.fechaFin))}</p> 
         </div>
     </main>
+    {#if esfuerzos.length > 0}
+    <footer>
+        <h2>Esfuerzos realizados</h2>
+        {#each listaEsfuerzos as esfuerzo}
+        <div class="card mb-2">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <span><strong>{esfuerzo.numKm} km</strong> ({esfuerzo.modalidad})
+                    {esfuerzo.comentario ? esfuerzo.comentario : ""}</span>
+                    {#if dorsal && (dorsal.usuario_id == esfuerzo.usuario_id)}
+                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+                        class="twitter-share-button"
+                        data-text={`He realizado un esfuerzo de ${esfuerzo.numKm} km (${esfuerzo.modalidad}) para el evento '${evento.nombre}'`}
+                        data-url="https://mueveteapp.herokuapp.com/" data-hashtags="MxLQnP" data-lang="es"
+                        data-show-count="false">Tweet</a><script
+                        async src="https://platform.twitter.com/widgets.js"
+                        charset="utf-8"></script>
+                    {/if}
+                </div>
+            </div>
+        </div>
+        {/each}
+    </footer>
+    {/if}
 </article>
 
 <DorsalForm on:post={handleDatosDorsal} />

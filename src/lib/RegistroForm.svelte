@@ -10,32 +10,40 @@ const getDatosUsuario = () => {
         username, password, nombre, apellidos, email, telefono, fechaNacimiento, ciudad 
     });
 }
+
+const validarDatos = () => {
+    if (username && password && nombre && apellidos && email && fechaNacimiento) {
+        getDatosUsuario();
+    } else {
+        dispatch("signin", { error: "Debe completar todos los campos obligatorios marcados con un asterisco (*)" })
+    }
+}
 </script>
 
 <form>
     <div class="form-row">
         <div class="form-group col-lg-6">
-            <label for="username">Nombre de usuario</label>
+            <label for="username">Nombre de usuario*</label>
             <input bind:value={username} type="text" class="form-control" id="username" placeholder="username">
         </div>
         <div class="form-group col-lg-6">
-            <label for="password">Contraseña</label>
+            <label for="password">Contraseña*</label>
             <input bind:value={password} type="password" class="form-control" id="password" placeholder="*******">
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-lg-6">
-            <label for="nombre">Nombre</label>
+            <label for="nombre">Nombre*</label>
             <input bind:value={nombre} type="text" class="form-control" id="nombre" placeholder="Juan">
         </div>
         <div class="form-group col-lg-6">
-            <label for="apellidos">Apellidos</label>
+            <label for="apellidos">Apellidos*</label>
             <input bind:value={apellidos} type="text" class="form-control" id="apellidos" placeholder="García">
         </div>
     </div>
     <div class="form-row">
         <div class="form-group col-lg-6">
-            <label for="email">E-mail</label>
+            <label for="email">E-mail*</label>
             <input bind:value={email} type="email" class="form-control" id="email" placeholder="juanga@dominio.com">
         </div>
         <div class="form-group col-lg-6">
@@ -45,7 +53,7 @@ const getDatosUsuario = () => {
     </div>
     <div class="form-row">
         <div class="form-group col-lg-6">
-            <label for="fechaNacimiento">Fecha de nacimiento</label>
+            <label for="fechaNacimiento">Fecha de nacimiento*</label>
             <input bind:value={fechaNacimiento} type="date" class="form-control" id="fechaNacimiento">
         </div>
         <div class="form-group col-lg-6">
@@ -53,5 +61,5 @@ const getDatosUsuario = () => {
             <input bind:value={ciudad} type="text" class="form-control" id="ciudad" placeholder="Madrid">
         </div>
     </div>
-    <button on:click|preventDefault={getDatosUsuario} class="btn btn-primary btn-block">Crear perfil</button>
+    <button on:click|preventDefault={validarDatos} class="btn btn-primary btn-block">Crear perfil</button>
 </form>

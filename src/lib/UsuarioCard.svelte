@@ -1,32 +1,42 @@
 <script>
+import { goto } from "$app/navigation";
 import UsuarioForm from "$lib/UsuarioForm.svelte";
 
 export let usuario;
 
+$ : error = false;
+$ : usuario = usuario;
+
 const handleDatosUsuario = async (event) => {
     const data = event.detail;
 
-    const usuarioEditado = {
-        nombre: data.nombre,
-        apellidos: data.apellidos,
-        email: data.email,
-        telefono: data.telefono,
-        fechaNacimiento: data.fechaNacimiento,
-        ciudad: data.ciudad
-    }
-
-    const response = await fetch("/api/usuarios/editar", {
-        method: "PUT",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(usuarioEditado)
-    });
-
-    if (response.ok) {
-        document.location = "/perfil";
+    if (data.error) {
+        error = data.error;
     } else {
-        error = await response.json();
+        const usuarioEditado = {
+            nombre: data.nombre,
+            apellidos: data.apellidos,
+            email: data.email,
+            telefono: data.telefono,
+            fechaNacimiento: data.fechaNacimiento,
+            ciudad: data.ciudad
+        }
+    
+        const response = await fetch("/api/usuarios/editar", {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(usuarioEditado)
+        });
+    
+        if (response.ok) {
+            //document.location = "/perfil";
+            usuario = await response.json();
+            goto("/perfil");
+        } else {
+            error = await response.json();
+        }
     }
 }
 </script>
@@ -49,6 +59,11 @@ const handleDatosUsuario = async (event) => {
             <div class="d-flex flex-row-reverse">
                 <button class="btn btn-primary btn-block" data-toggle="modal" data-target="#usuarioForm">Editar</button>
             </div>
+            {#if error}
+            <div class="alert alert-warning mt-3" role="alert">
+                {error}
+            </div>
+            {/if}
         </div>
     </div>
 </div>

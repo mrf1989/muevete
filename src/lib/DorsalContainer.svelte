@@ -18,7 +18,9 @@ const dorsalPDFPromise = getDorsalPDF(dorsal, evento);
             </div>
             <div class="modal-body">
                 {#await dorsalPDFPromise then dorsalPDF}
-                <iframe src={dorsalPDF} title="Dorsal de participación" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+                <div class="embed-responsive embed-responsive-16by9">
+                    <iframe src={dorsalPDF} title="Dorsal de participación" frameborder="0" style="width: 100%; height: 100%;"></iframe>
+                </div>
                 {/await}
             </div>
         </div>

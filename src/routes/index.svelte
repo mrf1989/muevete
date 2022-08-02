@@ -1,3 +1,25 @@
+<script context="module">
+export const load = async ({ fetch, session }) => {
+    const response = await fetch(`${session.apiURI}/api`);
+    if (response.ok) {
+        const data = await response.json();
+        return {
+            props: {
+                tituloAPP: data.api
+            }
+        }
+    }
+}
+</script>
+
+<script>
+export let tituloAPP;
+</script>
+
+<svelte:head>
+    <title>{tituloAPP}</title>
+</svelte:head>
+
 <div class="col-12">
     <div class="jumbotron jumbotron-fluid">
         <div class="container">

@@ -38,6 +38,10 @@ const handleLogin = async () => {
 }
 </script>
 
+<svelte:head>
+    <title>Login - Muévete APP</title>
+</svelte:head>
+
 <div class="col-md-6 offset-md-3">
     <h1 class="text-center">Login</h1>
     <form class="mb-4">

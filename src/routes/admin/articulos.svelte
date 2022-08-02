@@ -33,6 +33,10 @@ import ArticuloList from "$lib/ArticuloList.svelte";
 export let articulos;
 </script>
 
+<svelte:head>
+    <title>Administración - Artículos - Muévete APP</title>
+</svelte:head>
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -45,7 +49,10 @@ export let articulos;
                 <div class="card-body">
                     <div class="d-flex flex-row justify-content-between card-title">
                         <h3>Artículos</h3>
-                        <a class="btn btn-primary" href="/articulos/form">Nuevo artículo</a>
+                        <div>
+                            <a class="btn btn-primary d-none d-sm-inline-block" href="/articulos/form">+ Nuevo artículo</a>
+                            <a class="btn btn-primary d-inline-block d-sm-none" href="/articulos/form">+ Nuevo</a>
+                        </div>
                     </div>
                     {#if articulos}
                         {#each articulos as articulo}

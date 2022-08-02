@@ -6,12 +6,12 @@ const logout = () => {
     document.cookie = "MDAUTHID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     document.cookie = "MDAUTHID.sig=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     $session.user = false;
-    goto("/usuarios/login");
+    goto("/");
 }
 </script>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
-    <a class="navbar-brand" href="/">Muévete APP</a>
+<nav class="row navbar navbar-expand-lg navbar-light bg-light mb-3">
+    <a class="navbar-brand text-primary" href="/">Muévete APP</a>
     {#if $session.user}
     <span>¡Hola, {$session.user.username}!</span>
     {/if}
@@ -41,6 +41,7 @@ const logout = () => {
                     <a href="/admin/eventos" class="dropdown-item">Eventos</a>
                     <a href="/admin/articulos" class="dropdown-item">Artículos</a>
                     <a href="/admin/usuarios" class="dropdown-item">Usuarios</a>
+                    <a href="/admin/newsletters" class="dropdown-item">Newsletters</a>
                 </div>
             </li>
             {:else}
@@ -56,3 +57,9 @@ const logout = () => {
         </ul>
     </div>
 </nav>
+
+<style>
+.navbar {
+    border-bottom: 1px solid #eee;   
+}
+</style>
