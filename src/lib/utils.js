@@ -1,6 +1,7 @@
 import * as cookie from "cookie";
 import { PDFDocument, rgb, StandardFonts, degrees } from 'pdf-lib';
 
+
 export const getHeaders = (request) => {
     return new Headers({
         accept: "*/*",
@@ -15,6 +16,12 @@ export const getDate = (date) => {
     const mes = (date.getMonth() + 1).toString().padStart(2, 0);
     const dia = date.getDate().toString().padStart(2, 0);
     return `${date.getFullYear()}-${mes}-${dia}`;
+}
+
+export const getShortDate = (date) => {
+    const mes = (date.getMonth() + 1).toString().padStart(2, 0);
+    const dia = date.getDate().toString().padStart(2, 0);
+    return `${dia}-${mes}`;
 }
 
 export const getUserInformation = async (data, uri) => {
@@ -173,4 +180,43 @@ export const getNewsletter = (newsletter) => {
         <ul>${listaEventos}</ul>
         </div>` : ""}
     </div>`;
+}
+
+export const getDataUltimosEsfuerzos = (dataEsfuerzos) => {
+    const ultimos7Dias = [...Array(7).keys()].map(i => {
+        const date = new Date();
+        date.setDate(date.getDate() - i);
+        return date;
+    }).reverse();
+    
+    const ultimosEsfuerzos =  dataEsfuerzos.filter(esfuerzo => {
+        const fechaEsfuerzo = new Date(esfuerzo.fecha);
+        return fechaEsfuerzo >= ultimos7Dias[0] && fechaEsfuerzo <= ultimos7Dias[6];
+    });
+    
+    const dataUltimosEsfuerzos = [...Array(7).keys()].map(i => {
+        const date = ultimos7Dias[i];
+        const esfuerzoDate = ultimosEsfuerzos
+            .filter(esfuerzo => new Date(esfuerzo.fecha).getDate() == date.getDate())
+        if (esfuerzoDate.length <= 0) {
+            return 0;
+        } else {
+            return esfuerzoDate
+                .map(esfuerzo => esfuerzo.numKm)
+                .reduce((acum, actual) => acum + actual);
+        }
+    });
+    
+    return {
+        labels: ultimos7Dias.map(fecha => getShortDate(fecha)),
+        datasets: [
+            {
+                label: "Km totales",
+                borderColor: "#2b7bd2",
+                data: dataUltimosEsfuerzos,
+                backgroundColor: "#2b7bd2",
+                fill: true
+            }
+        ]
+    }
 }

@@ -1,4 +1,6 @@
 <script context="module">
+import { getDataUltimosEsfuerzos } from "$lib/utils";
+
 export const load = async ({ fetch, session }) => {
     if (!session.user) {
         return {
@@ -13,11 +15,12 @@ export const load = async ({ fetch, session }) => {
     if (responseUsuario.ok && responseEsfuerzos.ok) {
         const dataUsuario = await responseUsuario.json();
         const dataEsfuerzos = await responseEsfuerzos.json();
+        const data = getDataUltimosEsfuerzos(dataEsfuerzos);
 
         return {
             props: {
                 dataUsuario,
-                dataEsfuerzos
+                data
             }
         }
     } else {
@@ -32,9 +35,12 @@ export const load = async ({ fetch, session }) => {
 <script>
 import UsuarioCard from "$lib/UsuarioCard.svelte";
 import EventoList from "$lib/EventoList.svelte";
+import Chart from "$lib/Chart.svelte";
 
 export let dataUsuario;
-export let dataEsfuerzos;
+export let data;
+
+$ : dataEsfuerzos = data;
 
 const usuario = dataUsuario.usuario;
 const eventos = dataUsuario.eventos;
@@ -52,9 +58,6 @@ asignarDorsales();
 let eventosProcesados = eventos
     .filter(evento => new Date(evento.fechaFin) >= Date.now())
     .sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
-
-// TODO Obtener esfuerzos en los últimos 7 días
-console.log(dataEsfuerzos);
 </script>
 
 <svelte:head>
@@ -67,14 +70,22 @@ console.log(dataEsfuerzos);
             <UsuarioCard {usuario} />
         </div>
         <div class="col-md-8">
-            <div class="card">
+            <div class="card mb-2">
                 <div class="card-body">
                     <h3 class="card-title">Mis eventos activos</h3>
                     {#each eventosProcesados as evento}
-                        <EventoList {evento} />
+                    <EventoList {evento} />
                     {/each}
                 </div>
             </div>
+            {#if dataEsfuerzos}
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Últimos esfuerzos</h3>
+                    <Chart data={dataEsfuerzos} />
+                </div>
+            </div> 
+            {/if}
         </div>
     </div>
 </div>
