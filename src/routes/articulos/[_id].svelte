@@ -4,16 +4,18 @@ import ArticuloContainer from "$lib/ArticuloContainer.svelte";
 export const load = async ({ params, fetch, session }) => {
     const API_URI = `${session.apiURI}`;
     const articuloResponse = await fetch(`${API_URI}/api/articulos/${params._id}`);
-    const autorResponse = await fetch(`${API_URI}/api/usuarios/${articulo.usuario_id}`);
 
-    if (articuloResponse.ok && autorResponse.ok) {
+    if (articuloResponse.ok) {
         const articulo = await articuloResponse.json();
-        const autor = await autorResponse.json();
+        const autorResponse = await fetch(`${API_URI}/api/usuarios/${articulo.usuario_id}`);
 
-        return {
-            props: {
-                articulo,
-                autor: autor.usuario
+        if (autorResponse.ok) {
+            const autor = await autorResponse.json();
+            return {
+                props: {
+                    articulo,
+                    autor: autor.usuario
+                }
             }
         }
     } else {
