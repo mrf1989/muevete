@@ -20,7 +20,7 @@ export const load = async ({ fetch, session }) => {
         return {
             props: {
                 dataUsuario,
-                data
+                dataEsfuerzos: data
             }
         }
     } else {
@@ -35,12 +35,20 @@ export const load = async ({ fetch, session }) => {
 <script>
 import UsuarioCard from "$lib/UsuarioCard.svelte";
 import EventoList from "$lib/EventoList.svelte";
-import Chart from "$lib/Chart.svelte";
+import { getConfigEsfuerzosChart } from "$lib/utils";
+import { onMount } from "svelte";
 
 export let dataUsuario;
-export let data;
+export let dataEsfuerzos;
 
-$ : dataEsfuerzos = data;
+const esfuerzosChart = () => {
+    new Chart(
+        document.getElementById("esfuerzosChart"),
+        getConfigEsfuerzosChart(dataEsfuerzos)
+    );
+}
+
+onMount(esfuerzosChart);
 
 const usuario = dataUsuario.usuario;
 const eventos = dataUsuario.eventos;
@@ -58,6 +66,7 @@ asignarDorsales();
 let eventosProcesados = eventos
     .filter(evento => new Date(evento.fechaFin) >= Date.now())
     .sort((a, b) => new Date(a.fechaFin) - new Date(b.fechaFin));
+
 </script>
 
 <svelte:head>
@@ -78,14 +87,12 @@ let eventosProcesados = eventos
                     {/each}
                 </div>
             </div>
-            {#if dataEsfuerzos}
             <div class="card">
                 <div class="card-body">
                     <h3 class="card-title">Últimos esfuerzos</h3>
-                    <Chart data={dataEsfuerzos} />
+                    <canvas width="3" height="1" id="esfuerzosChart"></canvas>
                 </div>
             </div> 
-            {/if}
         </div>
     </div>
 </div>
