@@ -1,9 +1,11 @@
 <script>
+import { goto } from "$app/navigation";
 import UsuarioForm from "$lib/UsuarioForm.svelte";
 
 export let usuario;
 
 $ : error = false;
+$ : usuario = usuario;
 
 const handleDatosUsuario = async (event) => {
     const data = event.detail;
@@ -29,7 +31,9 @@ const handleDatosUsuario = async (event) => {
         });
     
         if (response.ok) {
-            document.location = "/perfil";
+            //document.location = "/perfil";
+            usuario = await response.json();
+            goto("/perfil");
         } else {
             error = await response.json();
         }
