@@ -15,7 +15,7 @@ export let esfuerzos;
 $: kmCompletados = getKmCompletados(esfuerzos);
 $: listaEsfuerzos = esfuerzos;
 
-const rankingTop5 = getRankingTop5(esfuerzos);
+const rankingTop5 = esfuerzos.length > 0 ? getRankingTop5(esfuerzos) : [];
 
 let error;
 
