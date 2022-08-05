@@ -3,8 +3,9 @@ import DorsalForm from "$lib/DorsalForm.svelte";
 import EsfuerzoForm from "$lib/EsfuerzoForm.svelte";
 import EventoProgressBar from "$lib/EventoProgressBar.svelte";
 import DorsalContainer from "$lib/DorsalContainer.svelte";
+import RankingItem from "$lib/RankingItem.svelte";
 import { session } from "$app/stores";
-import { getDate, getKmCompletados } from "$lib/utils";
+import { getDate, getKmCompletados, getRankingTop5 } from "$lib/utils";
 import { goto } from "$app/navigation";
 
 export let evento;
@@ -13,6 +14,8 @@ export let esfuerzos;
 
 $: kmCompletados = getKmCompletados(esfuerzos);
 $: listaEsfuerzos = esfuerzos;
+
+const rankingTop5 = esfuerzos.length > 0 ? getRankingTop5(esfuerzos) : [];
 
 let error;
 
@@ -53,6 +56,7 @@ const handleDatosEsfuerzo = async (event) => {
         modalidad: data.modalidad,
         dorsal_id: data.dorsal_id,
         usuario_id: $session.user.id,
+        username: $session.user.username,
         evento_id: evento._id
     }
 
@@ -105,7 +109,7 @@ const handleDatosEsfuerzo = async (event) => {
         </div>
         {/if}
     </header>
-    <main class="row">
+    <main class="row mb-2">
         <div class="col-12 text-center">
             <p class="display-2">{kmCompletados}/<small class="text-muted">{evento.objetivoKm} km</small></p>
         </div>
@@ -128,27 +132,35 @@ const handleDatosEsfuerzo = async (event) => {
         </div>
     </main>
     {#if esfuerzos.length > 0}
-    <footer>
-        <h2>Esfuerzos realizados</h2>
-        {#each listaEsfuerzos as esfuerzo}
-        <div class="card mb-2">
-            <div class="card-body">
-                <div class="d-flex justify-content-between">
-                    <span><strong>{esfuerzo.numKm} km</strong> ({esfuerzo.modalidad})
-                    {esfuerzo.comentario ? esfuerzo.comentario : ""}</span>
-                    {#if dorsal && (dorsal.usuario_id == esfuerzo.usuario_id)}
-                    <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
-                        class="twitter-share-button"
-                        data-text={`He realizado un esfuerzo de ${esfuerzo.numKm} km (${esfuerzo.modalidad}) para el evento '${evento.nombre}'`}
-                        data-url="https://mueveteapp.herokuapp.com/" data-hashtags="MxLQnP" data-lang="es"
-                        data-show-count="false">Tweet</a><script
-                        async src="https://platform.twitter.com/widgets.js"
-                        charset="utf-8"></script>
-                    {/if}
+    <footer class="row">
+        <div class="col-md-4">
+            <h2>Ranking Top 5</h2>
+            {#each rankingTop5 as usuario}
+                <RankingItem {usuario} />    
+            {/each}
+        </div>
+        <div class="col-md-8">
+            <h2>Esfuerzos realizados</h2>
+            {#each listaEsfuerzos as esfuerzo}
+            <div class="card mb-2">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <span><strong>{esfuerzo.numKm} km</strong> ({esfuerzo.modalidad})
+                        {esfuerzo.comentario ? esfuerzo.comentario : ""}</span>
+                        {#if dorsal && (dorsal.usuario_id == esfuerzo.usuario_id)}
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw"
+                            class="twitter-share-button"
+                            data-text={`He realizado un esfuerzo de ${esfuerzo.numKm} km (${esfuerzo.modalidad}) para el evento '${evento.nombre}'`}
+                            data-url="https://mueveteapp.herokuapp.com/" data-hashtags="MxLQnP" data-lang="es"
+                            data-show-count="false">Tweet</a><script
+                            async src="https://platform.twitter.com/widgets.js"
+                            charset="utf-8"></script>
+                        {/if}
+                    </div>
                 </div>
             </div>
+            {/each}
         </div>
-        {/each}
     </footer>
     {/if}
 </article>

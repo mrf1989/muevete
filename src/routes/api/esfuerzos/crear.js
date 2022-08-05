@@ -3,7 +3,6 @@ import { getHeaders } from "$lib/utils";
 export const post = async ({ request, locals }) => {
     const headers = getHeaders(request);
     const body = await request.json();
-    const eventoId = body.evento_id;
     const apiURI = locals.apiURI;
 
     delete body.evento_id;
@@ -16,7 +15,6 @@ export const post = async ({ request, locals }) => {
 
     if (response.ok) {
         response.headers.delete("content-length");
-        //response.headers.set("location", `/eventos/${eventoId}`);
         return {
             status: 200,
             headers: response.headers
