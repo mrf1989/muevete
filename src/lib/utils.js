@@ -277,9 +277,20 @@ export const getRankingTop5 = (esfuerzos) => {
 
     const rankingTop5 = ranking.sort((a, b) => b.numKm - a.numKm).slice(0,5);
 
-    rankingTop5[0].pos = 1,
-    rankingTop5[1].pos = 2,
-    rankingTop5[2].pos = 3
+    switch (rankingTop5.length) {
+        case 1:
+            rankingTop5[0].pos = 1;
+            break;
+        case 2:
+            rankingTop5[0].pos = 1;
+            rankingTop5[1].pos = 2;
+            break;
+        default:
+            rankingTop5[0].pos = 1;
+            rankingTop5[1].pos = 2;
+            rankingTop5[2].pos = 3;
+            break;
+    }
     
     return rankingTop5;
 }

@@ -19,17 +19,17 @@ export let usuario;
 .ranking {
     font-weight: 700;
     border: 1px solid lightgray;
-    padding: 5px 10px;
-    border-radius: 16px;
+    padding: 4px 10px;
+    border-radius: 50%;
     margin-right: 5px;
 }
 .pos-1 {
-    color: gold
+    background-color: gold;
 }
 .pos-2 {
-    color: silver;
+    background-color: silver;
 }
 .pos-3 {
-    color: lightsalmon;
+    background-color: lightsalmon;
 }
 </style>
